@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             Fronted_AutoConfianceTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = "Aggggndroid",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
