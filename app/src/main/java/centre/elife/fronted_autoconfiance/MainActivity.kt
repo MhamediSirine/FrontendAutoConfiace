@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
                     Greeting(
                         name = "Aggggndroid",
                         modifier = Modifier.padding(innerPadding)
+
                     )
                 }
             }
@@ -42,6 +43,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     Fronted_AutoConfianceTheme {
-        Greeting("Android")
+        Greeting("sirine")
     }
 }
