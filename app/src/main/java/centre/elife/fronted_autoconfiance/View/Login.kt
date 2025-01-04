@@ -38,14 +38,25 @@ fun Login(navController: NavHostController, LoginViewModel: LoginViewModel = Log
             .background(MaterialTheme.colorScheme.background)
 
     ) {
-        // Background shapes
-        Canvas(modifier = Modifier.fillMaxSize()) {
-            drawRect(color = Color(0xFFFFFFFF)) // Dark Blue background
-            drawRoundRect(
-                color = Color(0xFF010035), // Slightly lighter blue for the curved shape
-                size = size.copy(width = size.width, height = size.height / 4),
-                cornerRadius = CornerRadius(x = 20f, y = 50f),
-                topLeft = Offset(x = 0f, y = 0f)
+        Canvas(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(200.dp)
+                .align(Alignment.TopCenter)
+        ) {
+            drawPath(
+                path = Path().apply {
+                    moveTo(0f, size.height * 0.7f)
+                    cubicTo(
+                        size.width * 0.25f, size.height,
+                        size.width * 0.75f, size.height * 0.4f,
+                        size.width, size.height * 0.7f
+                    )
+                    lineTo(size.width, 0f)
+                    lineTo(0f, 0f)
+                    close()
+                },
+                color = primary // Purple Color
             )
         }
         Column(
@@ -55,41 +66,36 @@ fun Login(navController: NavHostController, LoginViewModel: LoginViewModel = Log
                 .fillMaxSize()
                 .padding(20.dp)
         ) {
-            Text(
-                text = "Welcome",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = secondary,
-            )
-            Spacer(modifier = Modifier.height(100.dp))
-
-
 
             Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "AutoConfiance!",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = secondary,
-            )
+
+
+                Text(
+                    text = "Welcome\nAutoConfiance!",
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    color = secondary,
+                )
+                Spacer(modifier = Modifier.height(20.dp))
 
 
 
-            Spacer(modifier = Modifier.height(70.dp))
 
+            Spacer(modifier = Modifier.height(30.dp))
 
             TextField(
                 value = email,
                 shape =  RoundedCornerShape(16.dp),
                 onValueChange = { email = it },
                 label = { Text("Email", color = Color.Gray) },
+                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier
                     .fillMaxWidth()
 
             )
 
             Spacer(modifier = Modifier.height(20.dp))
-
             TextField(
                 value = password,
                 shape =  RoundedCornerShape(16.dp),
@@ -118,6 +124,7 @@ fun Login(navController: NavHostController, LoginViewModel: LoginViewModel = Log
 
             Spacer(modifier = Modifier.height(30.dp))
 
+
             Button(
                 onClick = {
 
@@ -129,6 +136,7 @@ fun Login(navController: NavHostController, LoginViewModel: LoginViewModel = Log
                         Toast.makeText(context, "All fields are required.", Toast.LENGTH_SHORT).show()
                     }
                 },
+
                 shape =  RoundedCornerShape(16.dp),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFF010035)                ),
@@ -136,7 +144,10 @@ fun Login(navController: NavHostController, LoginViewModel: LoginViewModel = Log
                     .fillMaxWidth()
                     .height(50.dp),
 
+
                 ) {
+              
+             {
                 Text(text = "LOGIN", color = Color.White, fontWeight = FontWeight.Bold)
             }
 
@@ -149,14 +160,15 @@ fun Login(navController: NavHostController, LoginViewModel: LoginViewModel = Log
             ) {
                 Text(text = "Don't have an account?", color = Color.White, fontSize = 12.sp)
                 Spacer(modifier = Modifier.width(4.dp))
+
                 TextButton(onClick = { navController.navigate(SignupRoute) }) {
+
                     Text(text = "SIGN UP HERE", color = secondary,)
                 }
             }
         }
-    }
-}
-
+          }}}
+          
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
