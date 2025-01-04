@@ -9,12 +9,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,8 +22,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import centre.elife.fronted_autoconfiance.HomePageRoute
 import centre.elife.fronted_autoconfiance.LoginRoute
-import centre.elife.fronted_autoconfiance.SignupRoute
+import centre.elife.fronted_autoconfiance.SignUpRoute
 import centre.elife.fronted_autoconfiance.ViewModels.LoginViewModel
+import centre.elife.fronted_autoconfiance.ui.theme.primary
 import centre.elife.fronted_autoconfiance.ui.theme.secondary
 
 @Composable
@@ -56,7 +57,7 @@ fun Login(navController: NavHostController, LoginViewModel: LoginViewModel = Log
                     lineTo(0f, 0f)
                     close()
                 },
-                color = primary // Purple Color
+                color = primary
             )
         }
         Column(
@@ -147,7 +148,7 @@ fun Login(navController: NavHostController, LoginViewModel: LoginViewModel = Log
 
                 ) {
               
-             {
+
                 Text(text = "LOGIN", color = Color.White, fontWeight = FontWeight.Bold)
             }
 
@@ -161,13 +162,13 @@ fun Login(navController: NavHostController, LoginViewModel: LoginViewModel = Log
                 Text(text = "Don't have an account?", color = Color.White, fontSize = 12.sp)
                 Spacer(modifier = Modifier.width(4.dp))
 
-                TextButton(onClick = { navController.navigate(SignupRoute) }) {
+                TextButton(onClick = { navController.navigate(SignUpRoute) }) {
 
                     Text(text = "SIGN UP HERE", color = secondary,)
                 }
             }
         }
-          }}}
+          }}
           
 @Preview(showBackground = true)
 @Composable
