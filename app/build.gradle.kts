@@ -51,6 +51,10 @@ android {
 }
 
 dependencies {
+    implementation (libs.androidx.datastore.preferences)
+    implementation (libs.kotlinx.coroutines.android)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     implementation (libs.androidx.core.ktx.v1101)
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.kotlinx.serialization.json)

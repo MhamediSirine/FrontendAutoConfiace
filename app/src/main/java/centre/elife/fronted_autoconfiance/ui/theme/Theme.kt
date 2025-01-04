@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    tertiary = Pink40 ,
     primary = Color(0xFF00254B),  // Dark Blue
     secondary = Color(0xFF4CAFAD), // Teal
     background = Color(0xFF010035), // Dark Purple
@@ -26,7 +25,7 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorScheme = lightColorScheme(
 
-    tertiary = Pink40 ,
+
     primary = Color(0xFF00254B),  // Dark Blue
     secondary = Color(0xFF4CAFAD), // Teal
     background = Color(0xFF010035), // Dark Purple

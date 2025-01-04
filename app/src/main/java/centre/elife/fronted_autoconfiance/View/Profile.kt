@@ -30,16 +30,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import centre.elife.fronted_autoconfiance.LoginRoute
 import centre.elife.fronted_autoconfiance.R
-import centre.elife.fronted_autoconfiance.SignupRoute
 import centre.elife.fronted_autoconfiance.ui.theme.Fronted_AutoConfianceTheme
 
 
 @Composable
-fun HomePage(navController: NavHostController) {
+fun Profile(navController: NavHostController) {
     Scaffold(modifier = Modifier.fillMaxSize()
-       ,
+        ,
         containerColor = Color(0xFF010035)
-        ) { padding ->
+    ) { padding ->
         val sergioFont = FontFamily(Font(R.font.sergio_trend))
 
         Column(
@@ -90,7 +89,7 @@ fun HomePage(navController: NavHostController) {
                 }
 
                 Button(
-                    onClick = { navController.navigate(SignupRoute) },
+                    onClick = { navController.navigate(LoginRoute) },
                     modifier = Modifier.padding(start = 16.dp),
                     colors = ButtonDefaults.buttonColors( Color(0xFF4CAFAD))
                 ) {
@@ -104,7 +103,7 @@ fun HomePage(navController: NavHostController) {
     @Composable
     fun MyPagePreview() {
         Fronted_AutoConfianceTheme {
-            HomePage(navController)
+            Profile(navController)
         }
     }
 

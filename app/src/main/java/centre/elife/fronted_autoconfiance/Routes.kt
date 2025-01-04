@@ -6,3 +6,5 @@ import kotlinx.serialization.Serializable
 object HomePageRoute
 @Serializable
 object LoginRoute
+@Serializable
+object SignupRoute
