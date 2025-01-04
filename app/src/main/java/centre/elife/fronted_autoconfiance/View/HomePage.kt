@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.AlertDialogDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -28,9 +27,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import centre.elife.fronted_autoconfiance.LoginRoute
-import centre.elife.fronted_autoconfiance.R
+import centre.elife.fronted_autoconfiance.SignUpRoute
 import centre.elife.fronted_autoconfiance.ui.theme.Fronted_AutoConfianceTheme
+import com.appaxisinnovations.elifejetpack.R
 
 
 @Composable
@@ -40,6 +41,7 @@ fun HomePage(navController: NavHostController) {
         containerColor = Color(0xFF010035)
         ) { padding ->
         val sergioFont = FontFamily(Font(R.font.sergio_trend))
+
 
         Column(
             modifier = Modifier
@@ -81,9 +83,9 @@ fun HomePage(navController: NavHostController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Button(
-                    onClick = { /* Action to define */ },
+                    onClick = { navController.navigate(SignUpRoute) },
                     modifier = Modifier.padding(end = 16.dp),
-                    colors = ButtonDefaults.buttonColors( Color(0xFF4CAFAD))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF4CAFAD))
                 ) {
                     Text(text = "Login")
                 }
@@ -91,23 +93,25 @@ fun HomePage(navController: NavHostController) {
                 Button(
                     onClick = { navController.navigate(LoginRoute) },
                     modifier = Modifier.padding(start = 16.dp),
-                    colors = ButtonDefaults.buttonColors( Color(0xFF4CAFAD))
+                    colors = ButtonDefaults.buttonColors(Color(0xFF4CAFAD))
                 ) {
                     Text(text = "Sign Up")
                 }
             }
         }
     }
-
-
+}
+@Preview (showBackground = true)
     @Composable
-    fun MyPagePreview() {
+    fun preview() {
         Fronted_AutoConfianceTheme {
-            HomePage(navController)
+
+            val navController = rememberNavController()
+            HomePage(navController = navController)
         }
     }
 
 
 
-}
+
 

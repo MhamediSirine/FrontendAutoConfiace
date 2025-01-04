@@ -6,3 +6,12 @@ import kotlinx.serialization.Serializable
 object HomePageRoute
 @Serializable
 object LoginRoute
+@Serializable
+object ForgetPasswordRoute
+@Serializable
+object SignUpRoute
+@Serializable
+object EmailVerificationRoute
+@Serializable
+object ResetPasswordRoute
+
