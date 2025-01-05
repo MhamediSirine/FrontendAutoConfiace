@@ -17,7 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.material3.Scaffold
-
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -78,7 +77,7 @@ fun HomePage(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(70.dp))
 
-            // Row with Buttons
+
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
@@ -86,7 +85,7 @@ fun HomePage(navController: NavHostController) {
             ) {
                 Button(
 
-                    onClick = { navController.navigate(LoginRoute) },
+                    onClick = { navController.navigate(LoginRoute)},
 
                     modifier = Modifier.padding(end = 16.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xFF4CAFAD))
@@ -107,7 +106,7 @@ fun HomePage(navController: NavHostController) {
 }
 @Preview (showBackground = true)
 @Composable
-fun preview() {
+fun Preview() {
     Fronted_AutoConfianceTheme {
 
         val navController = rememberNavController()

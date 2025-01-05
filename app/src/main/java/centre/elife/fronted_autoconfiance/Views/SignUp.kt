@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import centre.elife.fronted_autoconfiance.R
+import centre.elife.fronted_autoconfiance.SignupRoute
 import centre.elife.fronted_autoconfiance.ViewModels.SignupViewModel
 import centre.elife.fronted_autoconfiance.ui.theme.secondary
 
@@ -32,7 +33,7 @@ import centre.elife.fronted_autoconfiance.ui.theme.secondary
 fun SignUp(navController: NavHostController, signupViewModel: SignupViewModel = SignupViewModel()) {
     val context = LocalContext.current
 
-    // State variables for form inputs
+
     var name by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
@@ -45,11 +46,11 @@ fun SignUp(navController: NavHostController, signupViewModel: SignupViewModel = 
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-        // Draw background shapes
+
         Canvas(modifier = Modifier.fillMaxSize()) {
-            drawRect(color = Color(0xFF16213E)) // Dark Blue background
+            drawRect(color = Color(0xFF16213E))
             drawRoundRect(
-                color = Color(0xFF23395B), // Slightly lighter blue for the curved shape
+                color = Color(0xFF23395B),
                 size = size.copy(width = size.width, height = size.height / 2),
                 cornerRadius = CornerRadius(x = 50f, y = 50f)
             )
@@ -63,7 +64,7 @@ fun SignUp(navController: NavHostController, signupViewModel: SignupViewModel = 
                 .padding(20.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.car), // Ensure this resource exists
+                painter = painterResource(id = R.drawable.car),
                 contentDescription = "Sample Image",
                 modifier = Modifier.size(150.dp),
                 alignment = Alignment.Center,
@@ -87,7 +88,7 @@ fun SignUp(navController: NavHostController, signupViewModel: SignupViewModel = 
             )
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Input fields
+
             TextField(
                 value = name,
                 onValueChange = { name = it },
@@ -149,15 +150,16 @@ fun SignUp(navController: NavHostController, signupViewModel: SignupViewModel = 
             )
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Sign-Up Button
+
             Button(
                 onClick = {
                     if (name.isNotBlank() && lastName.isNotBlank() && address.isNotBlank() &&
                         email.isNotBlank() && password.isNotBlank() && number.isNotBlank()
                     ) {
                         signupViewModel.signup(name, lastName, address, email, password,number)
-                        navController.navigate("SignupRoute")
                         Toast.makeText(context, "Registered Successfully!", Toast.LENGTH_SHORT).show()
+                        navController.navigate(SignupRoute)
+
                     } else {
                         Toast.makeText(context, "All fields are required.", Toast.LENGTH_SHORT).show()
                     }

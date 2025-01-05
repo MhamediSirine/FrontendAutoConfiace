@@ -10,7 +10,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.Views.HomePage
+import centre.elife.fronted_autoconfiance.Views.Login
+import centre.elife.fronted_autoconfiance.Views.SignUp
 import centre.elife.fronted_autoconfiance.ui.theme.Fronted_AutoConfianceTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,11 +26,27 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Fronted_AutoConfianceTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Aggggndroid",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                val navController = rememberNavController()
+                val context = LocalContext.current
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+
+                ) { innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = HomePageRoute,
+                        modifier = Modifier.padding(innerPadding)    ) {
+
+                        composable<HomePageRoute> {
+                            HomePage(navController)
+                        }
+                        composable<LoginRoute> {
+                            Login(navController)
+                        }
+                        composable<SignupRoute> {
+                            SignUp(navController)
+                        }
+                    }
                 }
             }
         }
@@ -42,6 +65,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun GreetingPreview() {
     Fronted_AutoConfianceTheme {
-        Greeting("Android")
+        val navController = rememberNavController()
+        SignUp(navController = navController)
     }
 }
