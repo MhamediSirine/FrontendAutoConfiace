@@ -12,11 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import centre.elife.fronted_autoconfiance.Views.HomePage
 import centre.elife.fronted_autoconfiance.Views.Login
+import centre.elife.fronted_autoconfiance.Views.ResetPassword
+import centre.elife.fronted_autoconfiance.Views.SendEmail
 import centre.elife.fronted_autoconfiance.Views.SignUp
 import centre.elife.fronted_autoconfiance.ui.theme.Fronted_AutoConfianceTheme
 
@@ -46,6 +50,13 @@ class MainActivity : ComponentActivity() {
                         composable<SignupRoute> {
                             SignUp(navController)
                         }
+                        composable<SendEmailRoute> {
+                            SendEmail(navController)
+                        }
+                        composable<ResetPasswordRoute> {
+                            ResetPassword(navController)
+                        }
+
                     }
                 }
             }

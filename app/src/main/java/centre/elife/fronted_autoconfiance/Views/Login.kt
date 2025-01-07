@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import centre.elife.fronted_autoconfiance.HomePageRoute
+import centre.elife.fronted_autoconfiance.ResetPasswordRoute
+import centre.elife.fronted_autoconfiance.SendEmailRoute
 import centre.elife.fronted_autoconfiance.SignupRoute
 import centre.elife.fronted_autoconfiance.ViewModels.LoginViewModel
 import centre.elife.fronted_autoconfiance.ui.theme.secondary
@@ -40,7 +42,7 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
         loginResponse?.let { response ->
             if (response.isSuccessful) {
                 Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT).show()
-                navController.navigate(HomePageRoute)
+
             } else {
                 errorMessage = response.errorBody()?.string() ?: "Invalid email or password."
             }
@@ -52,7 +54,6 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
-
         Canvas(modifier = Modifier.fillMaxSize()) {
             drawRect(color = Color(0xFF16213E))
             drawRoundRect(
@@ -70,63 +71,41 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
                 .fillMaxSize()
                 .padding(20.dp)
         ) {
-            // Welcome Text
+            Text("Welcome", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = secondary)
             Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "Welcome",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = secondary
-            )
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                text = "AutoConfiance!",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = secondary
-            )
+            Text("AutoConfiance!", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = secondary)
             Spacer(modifier = Modifier.height(30.dp))
 
             TextField(
                 value = email,
-                shape = RoundedCornerShape(16.dp),
                 onValueChange = { email = it },
-                label = { Text("Email", color = Color.Gray) },
-                modifier = Modifier.fillMaxWidth()
+                label = { Text("Email") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                isError = errorMessage.isNotEmpty()
             )
             Spacer(modifier = Modifier.height(20.dp))
 
             TextField(
                 value = password,
-                shape = RoundedCornerShape(16.dp),
                 onValueChange = { password = it },
-                label = { Text("Password", color = Color.Gray) },
+                label = { Text("Password") },
                 visualTransformation = PasswordVisualTransformation(),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                isError = errorMessage.isNotEmpty()
             )
 
             if (errorMessage.isNotEmpty()) {
-                Text(
-                    text = errorMessage,
-                    color = Color.Red,
-                    fontSize = 14.sp,
-                    modifier = Modifier.padding(top = 8.dp)
-                )
+                Text(text = errorMessage, color = Color.Red, fontSize = 14.sp)
             }
-            Spacer(modifier = Modifier.height(10.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                TextButton(onClick = { /* Navigate to Forgot Password */ }) {
-                    Text(text = "Forgot your password?", color = secondary, fontSize = 12.sp)
-                }
+            Spacer(modifier = Modifier.height(10.dp))
+            TextButton(onClick = { navController.navigate(SendEmailRoute) }) {
+                Text("Forgot your password?", color = secondary, fontSize = 12.sp)
             }
 
             Spacer(modifier = Modifier.height(30.dp))
-
             Button(
                 onClick = {
                     if (email.isBlank() || password.isBlank()) {
@@ -134,6 +113,7 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
                     } else {
                         errorMessage = ""
                         loginViewModel.login(email, password)
+
                     }
                 },
                 shape = RoundedCornerShape(16.dp),
@@ -146,25 +126,22 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
                 if (loading) {
                     CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
                 } else {
-                    Text(text = "LOGIN", color = Color.White, fontWeight = FontWeight.Bold)
+                    Text("LOGIN", color = Color.White, fontWeight = FontWeight.Bold)
                 }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
-
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "Don't have an account?", color = Color.White, fontSize = 12.sp)
+            Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+                Text("Don't have an account?", color = Color.White, fontSize = 12.sp)
                 Spacer(modifier = Modifier.width(4.dp))
                 TextButton(onClick = { navController.navigate(SignupRoute) }) {
-                    Text(text = "SIGN UP HERE", color = secondary)
+                    Text("SIGN UP HERE", color = secondary)
                 }
             }
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

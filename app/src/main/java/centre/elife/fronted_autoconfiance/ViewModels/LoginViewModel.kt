@@ -10,7 +10,9 @@ import retrofit2.Response
 
 class LoginViewModel : ViewModel() {
     val response = MutableLiveData<Response<LoginResponseModel>>()
-    val loading = MutableLiveData<Boolean>()
+    val loading = MutableLiveData<Boolean>(false)
+    val responseCode = MutableLiveData<Int>()
+    val errorMessage = MutableLiveData<String?>()
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
@@ -18,14 +20,16 @@ class LoginViewModel : ViewModel() {
             try {
                 val result = ClientService.login(email, password)
                 response.value = result
+                responseCode.value = result.code()
+
+                if (result.isSuccessful) {
+                    errorMessage.value = null
+                } else {
+                    errorMessage.value = "Error: ${result.message()}"
+                }
             } catch (e: Exception) {
-                response.value = Response.error(
-                    500,
-                    okhttp3.ResponseBody.create(
-                        okhttp3.MediaType.parse("text/plain"),
-                        "Something went wrong."
-                    )
-                )
+                errorMessage.value = e.message ?: "An unexpected error occurred."
+                responseCode.value = 500
             } finally {
                 loading.value = false
             }

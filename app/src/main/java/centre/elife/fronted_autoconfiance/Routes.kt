@@ -7,3 +7,8 @@ object LoginRoute
 object SignupRoute
 @Serializable
 object HomePageRoute
+@Serializable
+object SendEmailRoute
+
+@Serializable
+object ResetPasswordRoute
