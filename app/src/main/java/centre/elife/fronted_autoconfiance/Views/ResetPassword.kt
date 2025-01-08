@@ -1,6 +1,7 @@
 package centre.elife.fronted_autoconfiance.Views
 
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 
@@ -139,7 +140,13 @@ fun ResetPassword(navController: NavHostController,resetPasswordViewModel: Reset
                 onClick = {
                     if(code.isNotBlank() && newPassword.isNotBlank()){
                         resetPasswordViewModel.resetPassword(code, newPassword)
-                        navController.navigate(LoginRoute)
+                        resetPasswordViewModel.success.observeForever { response ->
+                            if (response == true) {
+                                navController.navigate(LoginRoute)
+                            } else if (response == false) {
+                                Toast.makeText(context, "Password reset code is not valid", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 },
                 modifier = Modifier

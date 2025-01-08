@@ -143,10 +143,15 @@ fun SendEmail(
                         if (email.isNotBlank() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 
                             sendEmailViewModel.sendEmail(context,email)
-                            sendEmailViewModel.responseCode.observeForever { code ->
-                                responseCode = code
+                            sendEmailViewModel.success.observeForever { response ->
+                                if (response == true) {
+                                    Toast.makeText(context, "A password reset code has been sent to your email", Toast.LENGTH_SHORT).show()
+                                    navController.navigate(ResetPasswordRoute)
+                                } else if (response == false) {
+                                    Toast.makeText(context, "Could not find any account with given email address", Toast.LENGTH_SHORT).show()
+                                }
                             }
-                            navController.navigate(ResetPasswordRoute)
+
 
                         } else {
                             Toast.makeText(context, "Please enter a valid email address!", Toast.LENGTH_SHORT).show()

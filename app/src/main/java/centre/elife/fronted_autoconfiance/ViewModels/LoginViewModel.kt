@@ -13,6 +13,7 @@ class LoginViewModel : ViewModel() {
     val loading = MutableLiveData<Boolean>(false)
     val responseCode = MutableLiveData<Int>()
     val errorMessage = MutableLiveData<String?>()
+    val success = MutableLiveData<Boolean?>(null)
 
     fun login(email: String, password: String) {
         viewModelScope.launch {
@@ -24,8 +25,10 @@ class LoginViewModel : ViewModel() {
 
                 if (result.isSuccessful) {
                     errorMessage.value = null
+                    success.value = true
                 } else {
-                    errorMessage.value = "Error: ${result.message()}"
+                    errorMessage.value = "Invalid email or password"
+                    success.value = false
                 }
             } catch (e: Exception) {
                 errorMessage.value = e.message ?: "An unexpected error occurred."

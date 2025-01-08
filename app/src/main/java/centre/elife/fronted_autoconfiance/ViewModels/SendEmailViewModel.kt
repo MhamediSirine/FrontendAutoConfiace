@@ -13,9 +13,9 @@ class SendEmailViewModel : ViewModel(){
 
     val loading = MutableLiveData<Boolean>(false)
     val responseCode = MutableLiveData<Int>()
+    val success = MutableLiveData<Boolean?>(null)
 
     fun sendEmail(context: Context, email: String) {
-
 
         viewModelScope.launch {
 
@@ -24,8 +24,10 @@ class SendEmailViewModel : ViewModel(){
             val response = ClientService.SendEmail(email)
             responseCode.value = response.code()
             if (response.isSuccessful) {
-
                 DataStoreManager.setEmail(context, email)
+                success.value = true
+            } else {
+                success.value = false
             }
             loading.value = false
 

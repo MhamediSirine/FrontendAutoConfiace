@@ -114,6 +114,16 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
                         errorMessage = ""
                         loginViewModel.login(email, password)
 
+                        loginViewModel.success.observeForever { isSuccess ->
+                            if (isSuccess != null) {
+                                if (isSuccess == true) {
+                                    Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT).show()
+                                }
+                                else if (isSuccess == false) {
+                                    Toast.makeText(context, loginViewModel.errorMessage.value, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }
                     }
                 },
                 shape = RoundedCornerShape(16.dp),

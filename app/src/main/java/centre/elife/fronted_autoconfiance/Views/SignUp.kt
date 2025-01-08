@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.LoginRoute
 import centre.elife.fronted_autoconfiance.R
 import centre.elife.fronted_autoconfiance.SignupRoute
 import centre.elife.fronted_autoconfiance.ViewModels.SignupViewModel
@@ -40,6 +41,8 @@ fun SignUp(navController: NavHostController, signupViewModel: SignupViewModel = 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var number by remember { mutableStateOf("") }
+
+    val isSignupSuccessful by signupViewModel.isSignupSuccessful.collectAsState()
 
     Box(
         modifier = Modifier
@@ -156,9 +159,17 @@ fun SignUp(navController: NavHostController, signupViewModel: SignupViewModel = 
                     if (name.isNotBlank() && lastName.isNotBlank() && address.isNotBlank() &&
                         email.isNotBlank() && password.isNotBlank() && number.isNotBlank()
                     ) {
-                        signupViewModel.signup(name, lastName, address, email, password,number)
-                        Toast.makeText(context, "Registered Successfully!", Toast.LENGTH_SHORT).show()
-                        navController.navigate(SignupRoute)
+                        if (!validateEmail(email)) {
+                            Toast.makeText(context, "Invalid email format", Toast.LENGTH_SHORT).show()
+                            return@Button
+                        }
+
+                        if (password.length < 8) {
+                            Toast.makeText(context, "Password must be at least 8 characters long", Toast.LENGTH_SHORT).show()
+                            return@Button
+                        }
+
+                        signupViewModel.signup(name, lastName, address, email, password, number)
 
                     } else {
                         Toast.makeText(context, "All fields are required.", Toast.LENGTH_SHORT).show()
@@ -172,8 +183,22 @@ fun SignUp(navController: NavHostController, signupViewModel: SignupViewModel = 
             ) {
                 Text(text = "Sign Up", color = Color.White, fontWeight = FontWeight.Bold)
             }
+
+            isSignupSuccessful?.let {
+                if (it) {
+                    navController.navigate(LoginRoute);
+                } else {
+                    Toast.makeText(context, "Email is already in use", Toast.LENGTH_SHORT).show()
+                }
+            }
+
         }
     }
+}
+
+fun validateEmail(email: String): Boolean {
+    val emailRegex = Regex("^[A-Za-z](.*)([@])(.+)(\\.)(.+)")
+    return emailRegex.matches(email);
 }
 
 @Preview(showBackground = true)
