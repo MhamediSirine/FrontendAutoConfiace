@@ -1,15 +1,16 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    kotlin("plugin.serialization") version "2.0.20"
 }
 
 android {
-    namespace = "centre.elife.fronted_autoconfiance"
+    namespace = "com.appaxisinnovations.elifejetpack"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "centre.elife.fronted_autoconfiance"
-        minSdk = 26
+        applicationId = "com.appaxisinnovations.elifejetpack"
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -50,7 +51,14 @@ android {
 }
 
 dependencies {
-
+    implementation (libs.androidx.datastore.preferences)
+    implementation (libs.kotlinx.coroutines.android)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation (libs.androidx.core.ktx.v1101)
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.serialization.json.v163)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -59,6 +67,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
