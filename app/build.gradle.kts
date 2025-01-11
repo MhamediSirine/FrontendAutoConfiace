@@ -2,15 +2,14 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 }
-
 android {
     namespace = "centre.elife.fronted_autoconfiance"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "centre.elife.fronted_autoconfiance"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -48,7 +47,6 @@ android {
         }
     }
 }
-
 dependencies {
 
     implementation(libs.androidx.core.ktx)
