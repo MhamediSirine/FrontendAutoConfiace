@@ -36,18 +36,6 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
     var errorMessage by remember { mutableStateOf("") }
 
     val loading by loginViewModel.loading.observeAsState(false)
-    val loginResponse by loginViewModel.response.observeAsState(null)
-
-    LaunchedEffect(loginResponse) {
-        loginResponse?.let { response ->
-            if (response.isSuccessful) {
-                Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT).show()
-
-            } else {
-                errorMessage = response.errorBody()?.string() ?: "Invalid email or password."
-            }
-        }
-    }
 
     Box(
         modifier = Modifier
@@ -112,12 +100,20 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
                         errorMessage = "Please fill in both email and password."
                     } else {
                         errorMessage = ""
-                        loginViewModel.login(email, password)
+                        loginViewModel.login(context, email, password)
 
                         loginViewModel.success.observeForever { isSuccess ->
                             if (isSuccess != null) {
                                 if (isSuccess == true) {
-                                    Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT).show()
+                                    loginViewModel.role.observeForever { role ->
+                                        if (role == "client") {
+                                            // hezou l page profile mta3 client
+                                        } else if (role == "employee") {
+                                            // hezou l page profile mta3 employee
+                                        } else {
+                                            // hezou l page profile mta3 admin
+                                        }
+                                    }
                                 }
                                 else if (isSuccess == false) {
                                     Toast.makeText(context, loginViewModel.errorMessage.value, Toast.LENGTH_SHORT).show()
