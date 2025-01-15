@@ -139,7 +139,7 @@ fun ResetPassword(navController: NavHostController,resetPasswordViewModel: Reset
             Button(
                 onClick = {
                     if(code.isNotBlank() && newPassword.isNotBlank()){
-                        resetPasswordViewModel.resetPassword(code, newPassword)
+                        resetPasswordViewModel.resetPassword(userEmail,code, newPassword)
                         resetPasswordViewModel.success.observeForever { response ->
                             if (response == true) {
                                 navController.navigate(LoginRoute)

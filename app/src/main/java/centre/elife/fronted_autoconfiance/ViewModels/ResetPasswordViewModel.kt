@@ -16,13 +16,13 @@ class ResetPasswordViewModel : ViewModel() {
     val errorMessage = MutableLiveData<String?>()
     val success = MutableLiveData<Boolean?>(null);
 
-    fun resetPassword(code: String, newPassword: String) {
+    fun resetPassword(email: String, code: String, newPassword: String) {
         viewModelScope.launch {
 
             loading.value = true
             try {
-                val resetPasswordDto = ResetPasswordDto(code, newPassword)
-                val response = ClientService.resetPassword(code, newPassword)
+                val resetPasswordDto = ResetPasswordDto(email, code, newPassword)
+                val response = ClientService.resetPassword(email, code, newPassword)
 
                 if (response.isSuccessful) {
                     success.value = true;

@@ -33,8 +33,8 @@ object ClientService {
         val response = api.SendEmail(SendEmailDto)
         return response
     }
-    suspend fun resetPassword(code: String, newPassword: String): Response<ResetPasswordResponse> {
-        val resetPasswordDto = ResetPasswordDto(code, newPassword)
+    suspend fun resetPassword(email: String, code: String, newPassword: String): Response<ResetPasswordResponse> {
+        val resetPasswordDto = ResetPasswordDto(email, code, newPassword)
         val response = api.resetPassword(resetPasswordDto)
         return response
 
