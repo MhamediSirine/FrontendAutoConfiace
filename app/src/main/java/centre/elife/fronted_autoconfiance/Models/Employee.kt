@@ -1,6 +1,7 @@
 package centre.elife.fronted_autoconfiance.Models
 
 data class Employee(
+    val id: String = "",
     val name: String,
     val lastName: String,
     val address: String,

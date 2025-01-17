@@ -48,13 +48,9 @@ fun Header( navController: NavHostController) {
                 .padding(top = 25.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
-                modifier = Modifier
-                    .size(100.dp)
-                    .background(Color.Gray, CircleShape)
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Medini Meriem", style = MaterialTheme.typography.titleLarge)
+
+            Spacer(modifier = Modifier.height(5.dp))
+            Text(text = "Medini Meriem", style = MaterialTheme.typography.titleLarge, color = Color.White)
         }
     }
 }

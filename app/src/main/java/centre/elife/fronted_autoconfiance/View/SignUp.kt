@@ -47,9 +47,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import centre.elife.fronted_autoconfiance.LoginRoute
+import centre.elife.fronted_autoconfiance.R
 import centre.elife.fronted_autoconfiance.ui.theme.primary
 import centre.elife.fronted_autoconfiance.ui.theme.secondary
-import com.appaxisinnovations.elifejetpack.R
+
 
 @Composable
 fun SignUp(navController: NavHostController) {

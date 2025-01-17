@@ -19,4 +19,11 @@ object ProfileAdminRoute
 object ClientProfileRoute
 @Serializable
 object EmployeeProfileRoute
+@Serializable
+object AddEmployerRoute
+@Serializable
+object GestionEmployeesRoute
+@Serializable
+object ModifyEmployerRoute
+
 

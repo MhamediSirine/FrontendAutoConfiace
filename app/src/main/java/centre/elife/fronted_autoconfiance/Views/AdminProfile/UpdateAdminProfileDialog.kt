@@ -20,7 +20,6 @@ fun UpdateAdminProfileDialog(onDismiss: () -> Unit) {
                 var lastName by remember { mutableStateOf("") }
                 var email by remember { mutableStateOf("") }
                 var password by remember { mutableStateOf("") }
-                var phoneNumber by remember { mutableStateOf("") }
                 var address by remember { mutableStateOf("") }
 
 
@@ -30,17 +29,17 @@ fun UpdateAdminProfileDialog(onDismiss: () -> Unit) {
                 TextField(value = lastName, onValueChange = { lastName = it }, label = { Text("last Name") })
                 Spacer(modifier = Modifier.height(8.dp))
 
+                TextField(value = address, onValueChange = { address = it }, label = { Text("Address") })
+                Spacer(modifier = Modifier.height(8.dp))
+
                 TextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
                 Spacer(modifier = Modifier.height(8.dp))
 
                 TextField(value = password, onValueChange = { password = it }, label = { Text("Password") })
                 Spacer(modifier = Modifier.height(8.dp))
 
-                TextField(value = phoneNumber, onValueChange = { phoneNumber = it }, label = { Text("Phone Number") })
-                Spacer(modifier = Modifier.height(8.dp))
 
-                TextField(value = address, onValueChange = { address = it }, label = { Text("Address") })
-                Spacer(modifier = Modifier.height(8.dp))
+
 
 
             }

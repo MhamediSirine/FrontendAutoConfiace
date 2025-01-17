@@ -55,6 +55,7 @@ fun ClientProfileCard() {
             ClientProfileOption(Icons.Default.AccountBox, "Last Name") { /* Handle Last Name Click */ }
             ClientProfileOption(Icons.Default.Phone, "Phone Number") { /* Handle Phone Number Click */ }
             ClientProfileOption(Icons.Default.LocationOn, "Address") { /* Handle Address Click */ }
+            ClientProfileOption(Icons.Default.Email, "Email") { /* Handle Email Click */ }
 
             ClientProfileOption(
                 icon = Icons.Default.Delete,

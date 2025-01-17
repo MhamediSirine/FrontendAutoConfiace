@@ -13,7 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import centre.elife.fronted_autoconfiance.HomePageRoute
 import centre.elife.fronted_autoconfiance.LoginRoute
-import centre.elife.fronted_autoconfiance.SignUpRoute
+import centre.elife.fronted_autoconfiance.SignupRoute
 import centre.elife.fronted_autoconfiance.ui.theme.Fronted_AutoConfianceTheme
 
 
@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     composable<LoginRoute> {
                         Login(navController)
                     }
-                    composable<SignUpRoute> {
+                    composable<SignupRoute> {
                         SignUp(navController)
                 }
 

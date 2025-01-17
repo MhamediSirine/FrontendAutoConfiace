@@ -54,6 +54,9 @@ fun EmployeeProfileCard() {
             EmployeeProfileOption(Icons.Default.AccountBox, "Last Name") { /* Handle Last Name Click */ }
             EmployeeProfileOption(Icons.Default.Email, "Email") { /* Handle Email Click */ }
             EmployeeProfileOption(Icons.Default.LocationOn, "Address") { /* Handle Address Click */ }
+            EmployeeProfileOption(Icons.Default.DateRange, "Birth Date") { /* Handle Birth Date Click */ }
+            EmployeeProfileOption(Icons.Default.Phone, "Post") { /* Handle Phone Number Click */ }
+
 
             EmployeeProfileOption(
                 icon = Icons.Default.Delete,

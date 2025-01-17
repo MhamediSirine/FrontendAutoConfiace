@@ -1,5 +1,8 @@
 package centre.elife.fronted_autoconfiance
 
+import AddEmployer
+import GestionEmployers
+import ModifyEmployerPage
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,18 +15,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.AdminProfile
+import centre.elife.fronted_autoconfiance.Views.AdminProfile.EmployeeProfile
 import centre.elife.fronted_autoconfiance.Views.ClientProfile.ClientProfile
-import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.EmployeeProfile
 
 import centre.elife.fronted_autoconfiance.Views.HomePage
 import centre.elife.fronted_autoconfiance.Views.Login
-import centre.elife.fronted_autoconfiance.Views.ProfileAdmin
 import centre.elife.fronted_autoconfiance.Views.ResetPassword
 import centre.elife.fronted_autoconfiance.Views.SendEmail
 import centre.elife.fronted_autoconfiance.Views.SignUp
@@ -70,13 +70,20 @@ class MainActivity : ComponentActivity() {
                         composable<EmployeeProfileRoute> {
                             EmployeeProfile(navController)
                         }
+                        composable<GestionEmployeesRoute> {
+                            GestionEmployers(navController)
+
+                        }
+
+                        }
+
 
                     }
                 }
             }
         }
     }
-}
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {

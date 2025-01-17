@@ -29,9 +29,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import centre.elife.fronted_autoconfiance.LoginRoute
-import centre.elife.fronted_autoconfiance.SignUpRoute
+import centre.elife.fronted_autoconfiance.R
+import centre.elife.fronted_autoconfiance.SignupRoute
 import centre.elife.fronted_autoconfiance.ui.theme.Fronted_AutoConfianceTheme
-import com.appaxisinnovations.elifejetpack.R
+
 
 
 @Composable
@@ -83,7 +84,7 @@ fun HomePage(navController: NavHostController) {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Button(
-                    onClick = { navController.navigate(SignUpRoute) },
+                    onClick = { navController.navigate(SignupRoute) },
                     modifier = Modifier.padding(end = 16.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xFF4CAFAD))
                 ) {

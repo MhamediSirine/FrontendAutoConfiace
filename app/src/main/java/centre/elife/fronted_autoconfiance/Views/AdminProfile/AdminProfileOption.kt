@@ -53,6 +53,8 @@ fun AdminProfileCard() {
             AdminProfileOption(Icons.Default.AccountBox, "Name") { /* Handle Name Click */ }
             AdminProfileOption(Icons.Default.AccountBox, "Last Name") { /* Handle Last Name Click */ }
             AdminProfileOption(Icons.Default.LocationOn, "Address") { /* Handle Address Click */ }
+            AdminProfileOption(Icons.Default.Email, "Email") { /* Handle Email Click */ }
+
 
             AdminProfileOption(
                 icon = Icons.Default.Delete,
