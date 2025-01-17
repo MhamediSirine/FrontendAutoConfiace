@@ -17,7 +17,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import centre.elife.fronted_autoconfiance.Views.ClientProfile
+import centre.elife.fronted_autoconfiance.Views.AdminProfile.AdminProfile
+import centre.elife.fronted_autoconfiance.Views.ClientProfile.ClientProfile
+import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.EmployeeProfile
+
 import centre.elife.fronted_autoconfiance.Views.HomePage
 import centre.elife.fronted_autoconfiance.Views.Login
 import centre.elife.fronted_autoconfiance.Views.ProfileAdmin
@@ -59,10 +62,13 @@ class MainActivity : ComponentActivity() {
                             ResetPassword(navController)
                         }
                         composable<ProfileAdminRoute> {
-                            ProfileAdmin(navController)
+                            AdminProfile(navController)
                         }
                         composable<ClientProfileRoute> {
                             ClientProfile(navController)
+                        }
+                        composable<EmployeeProfileRoute> {
+                            EmployeeProfile(navController)
                         }
 
                     }

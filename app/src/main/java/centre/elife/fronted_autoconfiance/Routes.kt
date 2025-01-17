@@ -16,3 +16,5 @@ object ResetPasswordRoute
 object ProfileAdminRoute
 @Serializable
 object ClientProfileRoute
+@Serializable
+object EmployeeProfileRoute

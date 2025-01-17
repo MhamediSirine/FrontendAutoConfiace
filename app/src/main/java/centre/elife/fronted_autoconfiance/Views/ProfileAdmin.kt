@@ -376,7 +376,7 @@ fun ProfileAdmin(navController: NavHostController,profileViewModel: ProfileViewM
                             val password = remember { mutableStateOf("") }
                             val dateOfBirth = remember { mutableStateOf("") }
                             val errorMessage = remember { mutableStateOf("") }
-                     
+
                             profileViewModel.fetchProfile(userEmail, "")
 
                             ProfileOption(icon = Icons.Default.AccountBox, label = name.toString())
