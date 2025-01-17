@@ -12,3 +12,7 @@ object SendEmailRoute
 
 @Serializable
 object ResetPasswordRoute
+@Serializable
+object ProfileAdminRoute
+@Serializable
+object ClientProfileRoute

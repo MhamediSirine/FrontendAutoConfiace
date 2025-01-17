@@ -21,7 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.ClientProfileRoute
 import centre.elife.fronted_autoconfiance.HomePageRoute
+import centre.elife.fronted_autoconfiance.ProfileAdminRoute
+
 import centre.elife.fronted_autoconfiance.ResetPasswordRoute
 import centre.elife.fronted_autoconfiance.SendEmailRoute
 import centre.elife.fronted_autoconfiance.SignupRoute
@@ -107,11 +110,11 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
                                 if (isSuccess == true) {
                                     loginViewModel.role.observeForever { role ->
                                         if (role == "client") {
-                                            // hezou l page profile mta3 client
+                                            navController.navigate(ClientProfileRoute)
                                         } else if (role == "employee") {
-                                            // hezou l page profile mta3 employee
+
                                         } else {
-                                            // hezou l page profile mta3 admin
+                                            navController.navigate(ProfileAdminRoute)
                                         }
                                     }
                                 }
