@@ -3,15 +3,20 @@ package centre.elife.fronted_autoconfiance
 import kotlinx.serialization.Serializable
 
 @Serializable
-object HomePageRoute
-@Serializable
 object LoginRoute
 @Serializable
-object ForgetPasswordRoute
+object SignupRoute
 @Serializable
-object SignUpRoute
+object HomePageRoute
 @Serializable
-object EmailVerificationRoute
+object SendEmailRoute
+
 @Serializable
 object ResetPasswordRoute
+@Serializable
+object ProfileAdminRoute
+@Serializable
+object ClientProfileRoute
+@Serializable
+object EmployeeProfileRoute
 
