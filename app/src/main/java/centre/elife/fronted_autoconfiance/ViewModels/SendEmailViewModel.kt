@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import centre.elife.fronted_autoconfiance.DataStoreManager.DataStoreManager
+
 import centre.elife.fronted_autoconfiance.Services.ClientService
 import kotlinx.coroutines.launch
 
@@ -26,6 +27,7 @@ class SendEmailViewModel : ViewModel(){
             if (response.isSuccessful) {
                 DataStoreManager.setEmail(context, email)
                 success.value = true
+
             } else {
                 success.value = false
             }

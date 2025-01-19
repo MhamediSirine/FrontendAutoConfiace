@@ -21,11 +21,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.ClientProfileRoute
+import centre.elife.fronted_autoconfiance.EmployeeProfileRoute
 import centre.elife.fronted_autoconfiance.HomePageRoute
+import centre.elife.fronted_autoconfiance.ProfileAdminRoute
+
 import centre.elife.fronted_autoconfiance.ResetPasswordRoute
 import centre.elife.fronted_autoconfiance.SendEmailRoute
 import centre.elife.fronted_autoconfiance.SignupRoute
 import centre.elife.fronted_autoconfiance.ViewModels.LoginViewModel
+import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.EmployeeProfile
 import centre.elife.fronted_autoconfiance.ui.theme.secondary
 
 @Composable
@@ -36,18 +41,6 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
     var errorMessage by remember { mutableStateOf("") }
 
     val loading by loginViewModel.loading.observeAsState(false)
-    val loginResponse by loginViewModel.response.observeAsState(null)
-
-    LaunchedEffect(loginResponse) {
-        loginResponse?.let { response ->
-            if (response.isSuccessful) {
-                Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT).show()
-
-            } else {
-                errorMessage = response.errorBody()?.string() ?: "Invalid email or password."
-            }
-        }
-    }
 
     Box(
         modifier = Modifier
@@ -112,12 +105,21 @@ fun Login(navController: NavHostController, loginViewModel: LoginViewModel = Log
                         errorMessage = "Please fill in both email and password."
                     } else {
                         errorMessage = ""
-                        loginViewModel.login(email, password)
+                        loginViewModel.login(context, email, password)
 
                         loginViewModel.success.observeForever { isSuccess ->
                             if (isSuccess != null) {
                                 if (isSuccess == true) {
-                                    Toast.makeText(context, "Login Successful!", Toast.LENGTH_SHORT).show()
+                                    loginViewModel.role.observeForever { role ->
+                                        if (role == "client") {
+                                            navController.navigate(ClientProfileRoute)
+                                        } else if (role == "employee") {
+                                            navController.navigate(EmployeeProfileRoute)
+
+                                        } else {
+                                            navController.navigate(ProfileAdminRoute)
+                                        }
+                                    }
                                 }
                                 else if (isSuccess == false) {
                                     Toast.makeText(context, loginViewModel.errorMessage.value, Toast.LENGTH_SHORT).show()

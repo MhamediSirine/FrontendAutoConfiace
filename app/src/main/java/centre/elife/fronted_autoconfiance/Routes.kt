@@ -9,6 +9,19 @@ object SignupRoute
 object HomePageRoute
 @Serializable
 object SendEmailRoute
-
 @Serializable
 object ResetPasswordRoute
+@Serializable
+object ProfileAdminRoute
+@Serializable
+object ClientProfileRoute
+@Serializable
+object EmployeeProfileRoute
+@Serializable
+object AddEmployeeRoute
+@Serializable
+object ModifyEmployeeRoute
+@Serializable
+object DeleteEmployeeRoute
+@Serializable
+object ListEmployeeRoute

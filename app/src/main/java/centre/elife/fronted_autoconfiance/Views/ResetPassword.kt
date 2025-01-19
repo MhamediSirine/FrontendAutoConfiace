@@ -6,10 +6,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,7 +36,6 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.navigation.NavHostController
 import centre.elife.fronted_autoconfiance.DataStoreManager.DataStoreManager
@@ -139,7 +134,7 @@ fun ResetPassword(navController: NavHostController,resetPasswordViewModel: Reset
             Button(
                 onClick = {
                     if(code.isNotBlank() && newPassword.isNotBlank()){
-                        resetPasswordViewModel.resetPassword(code, newPassword)
+                        resetPasswordViewModel.resetPassword(userEmail,code, newPassword)
                         resetPasswordViewModel.success.observeForever { response ->
                             if (response == true) {
                                 navController.navigate(LoginRoute)
