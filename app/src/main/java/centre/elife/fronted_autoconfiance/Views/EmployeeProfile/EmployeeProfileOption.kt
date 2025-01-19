@@ -11,8 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import centre.elife.fronted_autoconfiance.DataStoreManager.DataStoreManager
+import centre.elife.fronted_autoconfiance.ViewModels.EmployeeProfileViewModel
 
 
 @Composable
@@ -39,8 +42,40 @@ fun EmployeeProfileOption(icon: ImageVector, label: String, isLogout: Boolean = 
 }
 
 @Composable
-fun EmployeeProfileCard() {
+fun EmployeeProfileCard(viewModel: EmployeeProfileViewModel = EmployeeProfileViewModel()) {
     var showDeleteDialog by remember { mutableStateOf(false) }
+
+    var name by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
+    var address by remember { mutableStateOf("") }
+    var poste by remember { mutableStateOf("") }
+    var profileEmail by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+
+        val email = DataStoreManager.getEmail(context);
+        val token = DataStoreManager.getToken(context);
+
+        viewModel.getProfile(email, token)
+
+        viewModel.success.observeForever { success ->
+            if (!success) {
+
+            } else {
+                viewModel.profileDetails.observeForever { details ->
+                    name = details.data?.name ?: ""
+                    lastName = details.data?.lastName ?: ""
+                    address = details.data?.address ?: ""
+                    poste = details.data?.poste ?: ""
+                    profileEmail = email
+                }
+            }
+        }
+
+    }
+
 
     Card(
         modifier = Modifier
@@ -50,10 +85,10 @@ fun EmployeeProfileCard() {
         shape = MaterialTheme.shapes.medium
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            EmployeeProfileOption(Icons.Default.AccountBox, "Name") { /* Handle Name Click */ }
-            EmployeeProfileOption(Icons.Default.AccountBox, "Last Name") { /* Handle Last Name Click */ }
-            EmployeeProfileOption(Icons.Default.Email, "Email") { /* Handle Email Click */ }
-            EmployeeProfileOption(Icons.Default.LocationOn, "Address") { /* Handle Address Click */ }
+            EmployeeProfileOption(Icons.Default.AccountBox, name) { /* Handle Name Click */ }
+            EmployeeProfileOption(Icons.Default.AccountBox, lastName) { /* Handle Last Name Click */ }
+            EmployeeProfileOption(Icons.Default.Email, profileEmail) { /* Handle Email Click */ }
+            EmployeeProfileOption(Icons.Default.LocationOn, address) { /* Handle Address Click */ }
 
             EmployeeProfileOption(
                 icon = Icons.Default.Delete,

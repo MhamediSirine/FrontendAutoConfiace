@@ -41,5 +41,4 @@ interface ClientRepository {
     suspend fun getProfile(@Path("email") email: String,@Header("Authorization") token: String): Response<ProfileDetailsResponse>
 
 
-
 }
