@@ -1,4 +1,6 @@
-package centre.elife.fronted_autoconfiance.Views.AdminProfile
+
+package centre.elife.fronted_autoconfiance.Views.EmployeeProfile
+
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -18,15 +20,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
+
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import centre.elife.fronted_autoconfiance.Models.Employee
-import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.EmployeeProfileCard
-import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.UpdateEmployeeProfileDialog
+
+
+import centre.elife.fronted_autoconfiance.Views.ClientProfile.Header
 import kotlinx.coroutines.launch
 import centre.elife.fronted_autoconfiance.ui.theme.primary
 
@@ -36,6 +38,8 @@ fun EmployeeProfile(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var showDialog by remember { mutableStateOf(false) }
+
+
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -105,44 +109,8 @@ fun EmployeeProfile(navController: NavHostController) {
                     .padding(paddingValues)
                     .background(Color.White)
             ) {
-                // Embedded Header Code
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .background(Color(0xFFEEF5FF))
-                ) {
-                    Canvas(modifier = Modifier.fillMaxSize()) {
-                        drawPath(
-                            path = Path().apply {
-                                moveTo(0f, size.height * 0.7f)
-                                cubicTo(
-                                    size.width * 0.25f, size.height,
-                                    size.width * 0.75f, size.height * 0.4f,
-                                    size.width, size.height * 0.7f
-                                )
-                                lineTo(size.width, 0f)
-                                lineTo(0f, 0f)
-                                close()
-                            },
-                            color = primary
-                        )
-                    }
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(top = 20.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Spacer(modifier = Modifier.height(5.dp))
-                        Text(
-                            text = "Medini Meriem",
-                            style = MaterialTheme.typography.titleLarge,
-                            color = Color.White
-                        )
-                    }
-                }
 
+                Header( navController)
                 Spacer(modifier = Modifier.height(8.dp))
                 Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                     TextButton(onClick = { showDialog = true }) {
@@ -168,4 +136,6 @@ fun EmployeeProfile(navController: NavHostController) {
 @Composable
 fun EmployeeProfilePreview() {
     EmployeeProfile(navController = rememberNavController())
+
 }
+

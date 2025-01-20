@@ -1,7 +1,8 @@
+
+package centre.elife.fronted_autoconfiance.Views.AdminProfile
+
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,13 +30,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,30 +48,47 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import centre.elife.fronted_autoconfiance.AddEmployeeRoute
+import centre.elife.fronted_autoconfiance.DataStoreManager.DataStoreManager
 import centre.elife.fronted_autoconfiance.Models.Employee
+import centre.elife.fronted_autoconfiance.ModifyEmployeeRoute
+import centre.elife.fronted_autoconfiance.ViewModels.ListEmployeeViewModel
+import centre.elife.fronted_autoconfiance.data.models.ProfileDetails
+
 import centre.elife.fronted_autoconfiance.ui.theme.primary
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GestionEmployers(navController: NavHostController) {
-    val employees = remember {
-        mutableStateListOf(
-            Employee( id="1", "John", "Doe", "Tunis", "john.doe@gmail.com", "1234", "25", "rh",  null),
-            Employee( id="2", "Jane", "Smith", "Paris", "jane.smith@gmail.com", "5678", "30", "manager", null),
-            Employee( id="3", "Bob", "Johnson", "London", "bob.johnson@gmail.com", "9012", "28", "dev", null)
-        )
-    }
+fun GestionEmployers(navController: NavHostController,ListEmployeeViewModel: ListEmployeeViewModel = ListEmployeeViewModel()) {
+    var employees by remember { mutableStateOf(listOf<ProfileDetails>()) }
+val context = LocalContext.current
     val employeeToDelete = remember { mutableStateOf<Employee?>(null) }
     val showDeleteConfirmation = remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        val token = DataStoreManager.getToken(context);
+        ListEmployeeViewModel.getEmployees(token)
+        ListEmployeeViewModel.success.observeForever { success ->
+            if (!success) {
+                // Handle error
+            } else {
+                ListEmployeeViewModel.employees.observeForever { newEmployees ->
+                    employees = newEmployees
+                }
+
+
+            }
+
+    }}
 
     Scaffold(
         topBar = { TopSectionBox (scope = rememberCoroutineScope(), drawerState = rememberDrawerState(
             DrawerValue.Closed))
-                 },
+        },
         floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate("AddEmployer") }) {
+            FloatingActionButton(onClick = { navController.navigate(AddEmployeeRoute) }) {
+
                 Icon(Icons.Default.Add, contentDescription = "Add Employer")
             }
         }
@@ -80,11 +100,13 @@ fun GestionEmployers(navController: NavHostController) {
                 EmployeeItem(
                     employee = employee,
                     onDeleteClick = {
-                        employeeToDelete.value = employee
-                        showDeleteConfirmation.value = true
+
+                        //employeeToDelete.value = employee
+                        //showDeleteConfirmation.value = true
                     },
                     onModifyClick = {
-                        navController.navigate("ModifyEmployerPage/${employee.id}")
+                        navController.navigate(ModifyEmployeeRoute)
+
                     }
                 )
             }
@@ -94,7 +116,9 @@ fun GestionEmployers(navController: NavHostController) {
             ConfirmDeleteDialog(
                 onDismiss = { showDeleteConfirmation.value = false },
                 onConfirm = {
-                    employees.remove(employeeToDelete.value)
+
+                   // employees.remove(employeeToDelete.value)
+
                     employeeToDelete.value = null
                     showDeleteConfirmation.value = false
                 }
@@ -151,7 +175,9 @@ fun TopSectionBox(scope: CoroutineScope, drawerState: DrawerState) {
 
 @Composable
 fun EmployeeItem(
-    employee: Employee, // Accept an Employee object
+
+    employee: ProfileDetails, // Accept an Employee object
+
     onDeleteClick: () -> Unit,
     onModifyClick: () -> Unit
 ) {
@@ -168,7 +194,9 @@ fun EmployeeItem(
             modifier = Modifier.weight(1f) // Ensure this takes up available space
         ) {
             Text(employee.name, fontWeight = FontWeight.Bold)
-            Text(employee.poste, style = MaterialTheme.typography.labelMedium)
+
+            //Text(employee.poste, style = MaterialTheme.typography.labelMedium)
+
         }
 
         Spacer(modifier = Modifier.width(8.dp)) // Add some space between the text and buttons

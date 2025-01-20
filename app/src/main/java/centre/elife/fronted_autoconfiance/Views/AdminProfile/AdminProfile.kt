@@ -1,5 +1,4 @@
 package centre.elife.fronted_autoconfiance.Views.AdminProfile
-
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -166,4 +165,5 @@ fun AdminProfile(navController: NavHostController) {
 @Composable
 fun ProfilePreview() {
     AdminProfile(navController = rememberNavController())
+
 }

@@ -18,10 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.Views.AdminProfile.AddEmployee
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.AdminProfile
-import centre.elife.fronted_autoconfiance.Views.AdminProfile.EmployeeProfile
+import centre.elife.fronted_autoconfiance.Views.AdminProfile.GestionEmployers
+import centre.elife.fronted_autoconfiance.Views.AdminProfile.UpdateEmployeePage
 import centre.elife.fronted_autoconfiance.Views.ClientProfile.ClientProfile
-
+import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.EmployeeProfile
 import centre.elife.fronted_autoconfiance.Views.HomePage
 import centre.elife.fronted_autoconfiance.Views.Login
 import centre.elife.fronted_autoconfiance.Views.ResetPassword
@@ -43,7 +45,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = HomePageRoute,
+                        startDestination = ListEmployeeRoute,
                         modifier = Modifier.padding(innerPadding)    ) {
 
                         composable<HomePageRoute> {
@@ -70,15 +72,18 @@ class MainActivity : ComponentActivity() {
                         composable<EmployeeProfileRoute> {
                             EmployeeProfile(navController)
                         }
-                        composable<GestionEmployeesRoute> {
+
+                        composable<AddEmployeeRoute> {
+                            AddEmployee(navController)
+                        }
+                        composable<ModifyEmployeeRoute> {
+                            UpdateEmployeePage(navController)
+                        }
+
+                        composable<ListEmployeeRoute> {
                             GestionEmployers(navController)
 
-                        }
-
-                        }
-
-
-                    }
+                    }}
                 }
             }
         }
