@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = ListEmployeeRoute,
+                            startDestination = LoginRoute,
                         modifier = Modifier.padding(innerPadding)    ) {
 
                         composable<HomePageRoute> {
@@ -80,7 +80,10 @@ class MainActivity : ComponentActivity() {
                         composable<ListEmployeeRoute> {
                             GestionEmployers(navController)
 
-                    }}
+                        }
+                        composable<AdminRoute> {
+                            AdminProfile(navController)}
+                    }
                 }
             }
         }
@@ -103,3 +106,4 @@ fun GreetingPreview() {
         SignUp(navController = navController)
     }
 }
+

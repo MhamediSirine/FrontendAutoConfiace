@@ -100,6 +100,7 @@ val context = LocalContext.current
                         //showDeleteConfirmation.value = true
                     },
                     onModifyClick = {
+
                         navController.navigate(ModifyEmployeeRoute)
                     }
                 )
@@ -145,7 +146,7 @@ fun TopSectionBox(scope: CoroutineScope, drawerState: DrawerState) {
                     lineTo(0f, 0f)
                     close()
                 },
-                color = primary// Replace with your theme's primary color
+                color = primary
             )
         }
         IconButton(
@@ -157,7 +158,7 @@ fun TopSectionBox(scope: CoroutineScope, drawerState: DrawerState) {
             Icon(Icons.Default.Menu, contentDescription = "Open Menu", tint = Color.White)
         }
         Text(
-            text = "Gestion des Employers",
+            text = "Employee Management",
             style = MaterialTheme.typography.headlineSmall.copy(color = Color.White),
             modifier = Modifier
                 .align(Alignment.Center)
@@ -167,7 +168,7 @@ fun TopSectionBox(scope: CoroutineScope, drawerState: DrawerState) {
 
 @Composable
 fun EmployeeItem(
-    employee: ProfileDetails, // Accept an Employee object
+    employee: ProfileDetails,
     onDeleteClick: () -> Unit,
     onModifyClick: () -> Unit
 ) {
@@ -184,12 +185,13 @@ fun EmployeeItem(
             modifier = Modifier.weight(1f) // Ensure this takes up available space
         ) {
             Text(employee.name, fontWeight = FontWeight.Bold)
-            //Text(employee.poste, style = MaterialTheme.typography.labelMedium)
+            Text(employee.lastName, style = MaterialTheme.typography.labelMedium)
+            Text(employee.email, style = MaterialTheme.typography.labelMedium)
         }
 
-        Spacer(modifier = Modifier.width(8.dp)) // Add some space between the text and buttons
+        Spacer(modifier = Modifier.width(8.dp))
 
-        // Row containing the buttons for delete and modify
+
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {

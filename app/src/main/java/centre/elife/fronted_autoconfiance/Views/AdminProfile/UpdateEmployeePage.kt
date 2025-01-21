@@ -25,22 +25,25 @@ import centre.elife.fronted_autoconfiance.ViewModels.UpdateEmployeeViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateEmployeePage(navController: NavHostController,viewModel: EmployeeProfileViewModel = EmployeeProfileViewModel(),UpdateEmployeeViewModel: UpdateEmployeeViewModel = UpdateEmployeeViewModel()) {
+
+    val context = LocalContext.current
     var name by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var address by remember { mutableStateOf("") }
     var profileEmail by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var post by remember { mutableStateOf("") }
+    var emaill by remember { mutableStateOf("") }
 
     var birthDate by remember { mutableStateOf("") }
 
-    val context = LocalContext.current
+
 
     LaunchedEffect(Unit) {
 
         val email = DataStoreManager.getEmail(context);
         val token = DataStoreManager.getToken(context);
-
+emaill=email
         viewModel.getProfile(email, token)
 
         viewModel.success.observeForever { success ->
@@ -59,6 +62,7 @@ fun UpdateEmployeePage(navController: NavHostController,viewModel: EmployeeProfi
         }
 
     }
+
 
     var expanded by remember { mutableStateOf(false) }
 
@@ -123,7 +127,7 @@ fun UpdateEmployeePage(navController: NavHostController,viewModel: EmployeeProfi
             TextField(
                 value = post,
                 onValueChange = { post = it },
-                label = { Text("Post", color = Color.Gray) },
+                label = { Text(post, color = Color.Gray) },
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier.fillMaxWidth()
             )
@@ -132,9 +136,11 @@ fun UpdateEmployeePage(navController: NavHostController,viewModel: EmployeeProfi
 
             Button(
                 onClick = {
-                    UpdateEmployeeViewModel.updateEmployee(name,lastName,address,birthDate,post,"")
+
+                    UpdateEmployeeViewModel.updateEmployee(profileEmail,name,lastName,address,birthDate,post,"")
                     UpdateEmployeeViewModel.success.observeForever { success ->
                         if (!success) {
+
                             Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
                         }
                         else{

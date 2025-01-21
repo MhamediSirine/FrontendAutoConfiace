@@ -26,6 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.AdminRoute
+import centre.elife.fronted_autoconfiance.ClientProfileRoute
+import centre.elife.fronted_autoconfiance.HomePageRoute
+import centre.elife.fronted_autoconfiance.ListEmployeeRoute
+import centre.elife.fronted_autoconfiance.LoginRoute
 import kotlinx.coroutines.launch
 import centre.elife.fronted_autoconfiance.ui.theme.primary
 
@@ -53,16 +58,21 @@ fun AdminProfile(navController: NavHostController) {
                 )
 
                 // Sidebar options
-                val options = listOf("Home", "Profile", "Logout","Gestion Client","Gestion Employé", "About")
+                val options = listOf("Home", "Profile","Employee Management", "Logout", "About")
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                // Handle sidebar option click
-                                scope.launch { drawerState.close() }
-                                println("Selected Option: $option")
-                            }
+                                scope.launch { drawerState.close()
+                                    when (option) {
+                                        "Home" -> navController.navigate(HomePageRoute)
+                                        "Profile" -> navController.navigate(AdminRoute)
+                                        "Employee Management" -> navController.navigate(ListEmployeeRoute)
+                                        "Logout" -> navController.navigate(LoginRoute)
+                                        "About" -> navController.navigate("about") }
+                                    println("Selected Option: $option")
+                                }}
                             .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -70,8 +80,7 @@ fun AdminProfile(navController: NavHostController) {
                             imageVector = when (option) {
                                 "Home" -> Icons.Default.Home
                                 "Profile" -> Icons.Default.Person
-                                "Gestion Client" -> Icons.Default.Settings
-                                "Gestion Employé" -> Icons.Default.Settings
+                                "Employee Management" -> Icons.Default.Settings
                                 "Logout" -> Icons.Default.ExitToApp
                                 "About" -> Icons.Default.Info
                                 else -> Icons.Default.Refresh
@@ -105,46 +114,12 @@ fun AdminProfile(navController: NavHostController) {
                     .padding(paddingValues)
                     .background(Color.White)
             ) {
-                // Embedded Header Code
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .background(Color(0xFFEEF5FF))
-                ) {
-                    Canvas(modifier = Modifier.fillMaxSize()) {
-                        drawPath(
-                            path = Path().apply {
-                                moveTo(0f, size.height * 0.7f)
-                                cubicTo(
-                                    size.width * 0.25f, size.height,
-                                    size.width * 0.75f, size.height * 0.4f,
-                                    size.width, size.height * 0.7f
-                                )
-                                lineTo(size.width, 0f)
-                                lineTo(0f, 0f)
-                                close()
-                            },
-                            color = primary
-                        )
-                    }
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(top = 20.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Spacer(modifier = Modifier.height(5.dp))
-                        Text(
-                            text = "Medini Meriem",
-                            style = MaterialTheme.typography.titleLarge,
-                            color = Color.White
-                        )
-                    }
-                }
-
                 Spacer(modifier = Modifier.height(8.dp))
                 Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+
+
+                    AdminProfileCard()
+                    Spacer(modifier = Modifier.height(15.dp))
                     TextButton(onClick = { showDialog = true }) {
                         Text(
                             text = "Edit Profile",
@@ -152,8 +127,6 @@ fun AdminProfile(navController: NavHostController) {
                             style = MaterialTheme.typography.labelLarge
                         )
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    AdminProfileCard()
                 }
 
                 if (showDialog) {

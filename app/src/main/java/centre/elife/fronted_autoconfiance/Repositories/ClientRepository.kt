@@ -1,10 +1,12 @@
 package centre.elife.fronted_autoconfiance.Repositories
 
+import centre.elife.fronted_autoconfiance.data.Dto.DeleteAccountDto
 import centre.elife.fronted_autoconfiance.data.Dto.LoginDto
 import centre.elife.fronted_autoconfiance.data.Dto.ResetPasswordDto
 import centre.elife.fronted_autoconfiance.data.Dto.SendEmailDto
 import centre.elife.fronted_autoconfiance.data.Dto.SignupDto
 import centre.elife.fronted_autoconfiance.data.Dto.UpdateClientProfileDto
+import centre.elife.fronted_autoconfiance.data.models.DeleteProfileResponse
 import centre.elife.fronted_autoconfiance.data.models.LoginResponseModel
 import centre.elife.fronted_autoconfiance.data.models.ProfileDetailsResponse
 import centre.elife.fronted_autoconfiance.data.models.ResetPasswordResponse
@@ -13,6 +15,7 @@ import centre.elife.fronted_autoconfiance.data.models.UpdateProfileResponse
 import centre.elife.fronted_autoconfiance.data.models.sendEmailResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -33,12 +36,15 @@ interface ClientRepository {
     @POST("/api/authentication/reset-password")
     suspend fun resetPassword(@Body resetPasswordDto: ResetPasswordDto): Response<ResetPasswordResponse>
 
+    @GET("/api/authentication/profile/{email}")
+    suspend fun getProfile(@Path("email") email: String,@Header("Authorization") token: String): Response<ProfileDetailsResponse>
+
+    @DELETE("/api/client/delete-account")
+    suspend fun deleteAccount(@Body deleteAccountDto: DeleteAccountDto, @Header("Authorization") token: String): Response<DeleteProfileResponse>
+
     @PUT("/api/client/update-account")
     // 7ot token fi header esmou Authorization
     suspend fun updateClientAccount(@Body updateClientProfileDto: UpdateClientProfileDto, @Header("Authorization") token: String): Response<UpdateProfileResponse>
-
-    @GET("/api/authentication/profile/{email}")
-    suspend fun getProfile(@Path("email") email: String,@Header("Authorization") token: String): Response<ProfileDetailsResponse>
 
 
 }

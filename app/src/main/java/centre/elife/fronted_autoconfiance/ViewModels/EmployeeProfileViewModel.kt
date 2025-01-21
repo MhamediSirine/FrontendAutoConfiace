@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import centre.elife.fronted_autoconfiance.Services.ClientService
-import centre.elife.fronted_autoconfiance.data.Dto.EmployeeDto
 import centre.elife.fronted_autoconfiance.data.models.ProfileDetailsResponse
 import kotlinx.coroutines.launch
 

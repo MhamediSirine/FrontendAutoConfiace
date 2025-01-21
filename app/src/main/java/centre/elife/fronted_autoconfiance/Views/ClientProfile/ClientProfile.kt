@@ -22,6 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.ClientProfileRoute
+import centre.elife.fronted_autoconfiance.HomePageRoute
+import centre.elife.fronted_autoconfiance.Views.HomePage
 import kotlinx.coroutines.launch
 import centre.elife.fronted_autoconfiance.ui.theme.primary
 
@@ -55,10 +58,15 @@ fun ClientProfile(navController: NavHostController) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                // Handle sidebar option click
-                                scope.launch { drawerState.close() }
+
+                                scope.launch { drawerState.close()
+                                    when (option) {
+                                        "Home" -> navController.navigate(HomePageRoute)
+                                        "Profile" -> navController.navigate(ClientProfileRoute)
+                                        "Logout" -> navController.navigate("logout")
+                                        "About" -> navController.navigate("about") }
                                 println("Selected Option: $option")
-                            }
+                            }}
                             .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {

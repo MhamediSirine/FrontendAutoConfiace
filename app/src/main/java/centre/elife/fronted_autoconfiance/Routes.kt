@@ -25,3 +25,5 @@ object ModifyEmployeeRoute
 object DeleteEmployeeRoute
 @Serializable
 object ListEmployeeRoute
+@Serializable
+object AdminRoute
