@@ -1,7 +1,6 @@
 package centre.elife.fronted_autoconfiance
 
 import AddEmployer
-import GestionEmployers
 import ModifyEmployerPage
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -42,11 +41,12 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
 
-                ) { innerPadding ->
+                    ) { innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = ListEmployeeRoute,
-                        modifier = Modifier.padding(innerPadding)    ) {
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
 
                         composable<HomePageRoute> {
                             HomePage(navController)
@@ -83,13 +83,14 @@ class MainActivity : ComponentActivity() {
                         composable<ListEmployeeRoute> {
                             GestionEmployers(navController)
 
-                    }}
+                        }
+                    }
                 }
             }
         }
     }
 
-
+}
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
@@ -106,3 +107,4 @@ fun GreetingPreview() {
         SignUp(navController = navController)
     }
 }
+

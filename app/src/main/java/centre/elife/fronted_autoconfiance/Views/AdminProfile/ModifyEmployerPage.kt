@@ -76,5 +76,5 @@ fun ModifyEmployerPage(
 
 @Preview
 @Composable
-fun ModifyEmployerPagePreview() {}
+fun ModifyEmployerPagePreview( ) {}
 
