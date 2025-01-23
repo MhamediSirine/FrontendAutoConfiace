@@ -1,5 +1,7 @@
 package centre.elife.fronted_autoconfiance.ViewModels
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +20,7 @@ class deleteAccountClientViewModel : ViewModel() {
             loading.value = true
             try {
                 val result = ClientService.deleteAccount(email, password,token)
+                responseCode.value = result.code();
                 if (result.isSuccessful) {
                     errorMessage.value = null
                     success.value = true

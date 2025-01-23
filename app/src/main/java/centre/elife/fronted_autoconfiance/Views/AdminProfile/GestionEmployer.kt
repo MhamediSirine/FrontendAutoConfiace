@@ -63,6 +63,7 @@ fun GestionEmployers(navController: NavHostController,ListEmployeeViewModel: Lis
 val context = LocalContext.current
     val employeeToDelete = remember { mutableStateOf<Employee?>(null) }
     val showDeleteConfirmation = remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
         val token = DataStoreManager.getToken(context);
         ListEmployeeViewModel.getEmployees(token)
@@ -100,8 +101,10 @@ val context = LocalContext.current
                         //showDeleteConfirmation.value = true
                     },
                     onModifyClick = {
-
-                        navController.navigate(ModifyEmployeeRoute)
+                        coroutineScope.launch {
+                            DataStoreManager.setEmailToUpdate(context, employee.email);
+                            navController.navigate(ModifyEmployeeRoute)
+                        }
                     }
                 )
             }

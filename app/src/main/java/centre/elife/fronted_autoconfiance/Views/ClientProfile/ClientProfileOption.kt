@@ -16,7 +16,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import centre.elife.fronted_autoconfiance.DataStoreManager.DataStoreManager
+import centre.elife.fronted_autoconfiance.LoginRoute
 import centre.elife.fronted_autoconfiance.ViewModels.EmployeeProfileViewModel
 import centre.elife.fronted_autoconfiance.ViewModels.deleteAccountClientViewModel
 
@@ -101,12 +103,12 @@ fun ClientProfileCard(viewModel: EmployeeProfileViewModel = EmployeeProfileViewM
 
     // Show the delete account dialog if triggered
     if (showDeleteDialog) {
-        DeleteAccountDialog(onDismiss = { showDeleteDialog = false })
+        DeleteAccountDialog(onDismiss = { showDeleteDialog = false; })
     }
 }
 
 @Composable
-fun DeleteAccountDialog(onDismiss: () -> Unit,deleteAccountClientViewModel: deleteAccountClientViewModel= deleteAccountClientViewModel()) {
+fun DeleteAccountDialog(onDismiss: () -> Unit, deleteAccountClientViewModel: deleteAccountClientViewModel= deleteAccountClientViewModel()) {
 
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf("") }
@@ -151,7 +153,10 @@ fun DeleteAccountDialog(onDismiss: () -> Unit,deleteAccountClientViewModel: dele
                             Toast.makeText(context, "Account Deleted", Toast.LENGTH_SHORT).show()
                             onDismiss()
                         }
-                }}}
+                    }
+                    }
+                }
+
 
             ) {
                 Text("Delete", color = MaterialTheme.colorScheme.error)
@@ -161,11 +166,4 @@ fun DeleteAccountDialog(onDismiss: () -> Unit,deleteAccountClientViewModel: dele
             TextButton(onClick = onDismiss) { Text("Cancel") }
         }
     )
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun ClientProfileCardPreview() {
-    ClientProfileCard()
 }

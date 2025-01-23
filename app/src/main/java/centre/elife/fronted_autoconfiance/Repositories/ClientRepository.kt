@@ -39,7 +39,7 @@ interface ClientRepository {
     @GET("/api/authentication/profile/{email}")
     suspend fun getProfile(@Path("email") email: String,@Header("Authorization") token: String): Response<ProfileDetailsResponse>
 
-    @DELETE("/api/client/delete-account")
+    @POST("/api/client/delete-account")
     suspend fun deleteAccount(@Body deleteAccountDto: DeleteAccountDto, @Header("Authorization") token: String): Response<DeleteProfileResponse>
 
     @PUT("/api/client/update-account")

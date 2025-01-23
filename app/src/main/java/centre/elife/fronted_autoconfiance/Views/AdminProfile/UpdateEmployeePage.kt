@@ -41,9 +41,8 @@ fun UpdateEmployeePage(navController: NavHostController,viewModel: EmployeeProfi
 
     LaunchedEffect(Unit) {
 
-        val email = DataStoreManager.getEmail(context);
+        val email = DataStoreManager.getEmailToUpdate(context);
         val token = DataStoreManager.getToken(context);
-emaill=email
         viewModel.getProfile(email, token)
 
         viewModel.success.observeForever { success ->
