@@ -1,4 +1,5 @@
 package centre.elife.fronted_autoconfiance
+
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -25,3 +26,5 @@ object ModifyEmployeeRoute
 object DeleteEmployeeRoute
 @Serializable
 object ListEmployeeRoute
+@Serializable
+object UpdateEmployeeProfileRoute

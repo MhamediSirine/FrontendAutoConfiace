@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -22,6 +21,7 @@ import centre.elife.fronted_autoconfiance.Views.AdminProfile.GestionEmployers
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.UpdateEmployeePage
 import centre.elife.fronted_autoconfiance.Views.ClientProfile.ClientProfile
 import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.EmployeeProfile
+import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.UpdateEmployeeProfileDialog
 import centre.elife.fronted_autoconfiance.Views.HomePage
 import centre.elife.fronted_autoconfiance.Views.Login
 import centre.elife.fronted_autoconfiance.Views.ResetPassword
@@ -39,13 +39,12 @@ class MainActivity : ComponentActivity() {
                 val context = LocalContext.current
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = ListEmployeeRoute,
-                        modifier = Modifier.padding(innerPadding)    ) {
-
+                        startDestination = LoginRoute,
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
                         composable<HomePageRoute> {
                             HomePage(navController)
                         }
@@ -76,11 +75,11 @@ class MainActivity : ComponentActivity() {
                         composable<ModifyEmployeeRoute> {
                             UpdateEmployeePage(navController)
                         }
-
                         composable<ListEmployeeRoute> {
                             GestionEmployers(navController)
+                        }
 
-                    }}
+                    }
                 }
             }
         }

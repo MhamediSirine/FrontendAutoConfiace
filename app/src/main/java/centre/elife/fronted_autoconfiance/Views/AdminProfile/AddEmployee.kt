@@ -68,7 +68,7 @@ fun AddEmployee(navController: NavHostController, AddEmployeeViewModel: AddEmplo
     val postOptions = listOf("RH", "Finance", "Mechanique") // Dropdown options
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Add Employer") }) }
+        topBar = { TopAppBar(title = { Text("Add Employee") }) }
     ) { paddingValues ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

@@ -1,31 +1,20 @@
 package centre.elife.fronted_autoconfiance.Views.EmployeeProfile
 
-
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-
 import centre.elife.fronted_autoconfiance.Views.ClientProfile.Header
 import kotlinx.coroutines.launch
 import centre.elife.fronted_autoconfiance.ui.theme.primary
@@ -36,8 +25,6 @@ fun EmployeeProfile(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var showDialog by remember { mutableStateOf(false) }
-
-
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -56,7 +43,7 @@ fun EmployeeProfile(navController: NavHostController) {
                 )
 
                 // Sidebar options
-                val options = listOf("Home", "Profile", "Logout","Gestion Client", "About")
+                val options = listOf("Home", "Profile", "Logout", "Gestion Client", "About")
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
@@ -79,11 +66,11 @@ fun EmployeeProfile(navController: NavHostController) {
                                 else -> Icons.Default.Refresh
                             },
                             contentDescription = option,
-                            tint = Color.Gray,
+                            tint = Color.Black, // Changed icon color to black
                             modifier = Modifier.size(24.dp)
                         )
                         Spacer(modifier = Modifier.width(16.dp))
-                        Text(text = option, style = MaterialTheme.typography.labelMedium)
+                        Text(text = option, style = MaterialTheme.typography.labelMedium.copy(color = Color.Black)) // Changed text color to black
                     }
                 }
             }
@@ -105,10 +92,9 @@ fun EmployeeProfile(navController: NavHostController) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .background(Color.White)
+                    .background(Color(0xFFF0F0F0)) // Changed background color for better visuals
             ) {
-
-                Header( navController)
+                Header(navController)
                 Spacer(modifier = Modifier.height(8.dp))
                 Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                     TextButton(onClick = { showDialog = true }) {
@@ -123,7 +109,10 @@ fun EmployeeProfile(navController: NavHostController) {
                 }
 
                 if (showDialog) {
-                    UpdateEmployeeProfileDialog(onDismiss = { showDialog = false })
+                    UpdateEmployeeProfileDialog(
+
+                        onDismiss = { showDialog = false }
+                    )
                 }
             }
         }
