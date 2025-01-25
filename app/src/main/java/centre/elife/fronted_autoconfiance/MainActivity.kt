@@ -21,6 +21,7 @@ import centre.elife.fronted_autoconfiance.Views.AdminProfile.AdminProfile
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.GestionEmployers
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.UpdateEmployeePage
 import centre.elife.fronted_autoconfiance.Views.ClientProfile.ClientProfile
+import centre.elife.fronted_autoconfiance.Views.DetailsPage
 import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.EmployeeProfile
 import centre.elife.fronted_autoconfiance.Views.HomePage
 import centre.elife.fronted_autoconfiance.Views.Login
@@ -43,7 +44,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                            startDestination = LoginRoute,
+                            startDestination = DetailsRoute,
                         modifier = Modifier.padding(innerPadding)    ) {
 
                         composable<HomePageRoute> {
@@ -81,8 +82,14 @@ class MainActivity : ComponentActivity() {
                             GestionEmployers(navController)
 
                         }
+
+                        composable<DetailsRoute> {
+                            DetailsPage(navController)
+                        }
+
                         composable<AdminRoute> {
-                            AdminProfile(navController)}
+                            AdminProfile(navController)
+                        }
                     }
                 }
             }
