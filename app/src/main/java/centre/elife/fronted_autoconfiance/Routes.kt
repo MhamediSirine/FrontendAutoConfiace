@@ -29,3 +29,5 @@ object ListEmployeeRoute
 object AdminRoute
 @Serializable
 object DetailsRoute
+@Serializable
+object ServicesRoute

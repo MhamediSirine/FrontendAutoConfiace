@@ -27,6 +27,7 @@ import centre.elife.fronted_autoconfiance.Views.HomePage
 import centre.elife.fronted_autoconfiance.Views.Login
 import centre.elife.fronted_autoconfiance.Views.ResetPassword
 import centre.elife.fronted_autoconfiance.Views.SendEmail
+import centre.elife.fronted_autoconfiance.Views.ServicePage
 import centre.elife.fronted_autoconfiance.Views.SignUp
 import centre.elife.fronted_autoconfiance.ui.theme.Fronted_AutoConfianceTheme
 
@@ -44,7 +45,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                            startDestination = DetailsRoute,
+                            startDestination = ServicesRoute,
                         modifier = Modifier.padding(innerPadding)    ) {
 
                         composable<HomePageRoute> {
@@ -90,6 +91,11 @@ class MainActivity : ComponentActivity() {
                         composable<AdminRoute> {
                             AdminProfile(navController)
                         }
+
+                        composable<ServicesRoute> {
+                            ServicePage()
+                        }
+
                     }
                 }
             }

@@ -2,6 +2,7 @@ package centre.elife.fronted_autoconfiance.Views
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -10,9 +11,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
@@ -50,18 +53,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.R
 import centre.elife.fronted_autoconfiance.ui.theme.primary
+import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ServicePage() {
-
-    // State for the sidebar (drawer)
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var showDialog by remember { mutableStateOf(false) } // State to control the popup dialog
@@ -83,14 +90,12 @@ fun ServicePage() {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                // Sidebar options
                 val options = listOf("Home", "Profile", "Gestion des Employers", "Gestion des Clients", "Logout","About")
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                // Handle sidebar option click
                                 scope.launch { drawerState.close() }
                                 println("Selected Option: $option")
                             }
@@ -130,113 +135,85 @@ fun ServicePage() {
                 )
             }
         ) { paddingValues ->
-            Column(
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
                     .background(Color.White)
             ) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)), // Light gray background for the card
-                    shape = RoundedCornerShape(16.dp), // Rounded corners for a modern look
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp) // Shadow for a subtle 3D effect
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp) // Inner padding for the card content
-                    ) {
-                        // Title
-                        Text(
-                            text = "À Propos de Auto Confiance",
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold
-                            ),
-                            color = primary,
-                            modifier = Modifier.padding(bottom = 8.dp) // Space below the title
-                        )
-
-                        // Description
-                        Text(
-                            text = "\"Auto Confiance\" est votre partenaire de confiance pour l’entretien et la vidange de votre véhicule. Avec une équipe expérimentée et des services rapides, fiables et abordables, nous veillons à ce que votre moteur reste en parfait état.",
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                fontSize = 16.sp,
-                                lineHeight = 22.sp
-                            ),
-                            color = MaterialTheme.colorScheme.onBackground,
-                            textAlign = TextAlign.Justify, // Aligns the text for a clean look
-                            modifier = Modifier.padding(8.dp)
-                        )
-                    }
+                item {
+                    ServiceCard(R.drawable.oil_service, "Changement d'huile", "Gardez votre moteur en parfait état de marche avec notre service de changement d'huile rapide et efficace.")
                 }
-
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp), // Padding around the card
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)), // Background color
-                    shape = RoundedCornerShape(16.dp), // Rounded corners
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp) // Shadow elevation
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp) // Inner padding for the card content
-                    ) {
-                        // Title
-                        Text(
-                            text = "Contactez-nous",
-                            style = MaterialTheme.typography.titleLarge.copy(
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold
-                            ),
-                            color = primary,
-                            modifier = Modifier.padding(bottom = 8.dp) // Space below the title
-                        )
-
-                        // Contact options
-                        ContactOption(icon = Icons.Default.Email, label = "autoconfience@gmail.com")
-                        ContactOption(icon = Icons.Default.Phone, label = "+216 71 180 196")
-                        ContactOption(icon = Icons.Default.LocationOn, label = "Zone Industrielle Kheireddine, Lac 3, Tunis")
-                        ContactOption(icon = Icons.Default.Search, label = "https://vidange.tn/services/agence/20000033")
-
-                        Button(
-                            onClick = {
-                                val latitude = 36.8065
-                                val longitude = 10.1815
-                                val label = "Auto Confiance, Zone Industrielle Kheireddine, Lac 3, Tunis"
-
-                                val gmmIntentUri = Uri.parse("geo:$latitude,$longitude?q=$latitude,$longitude($label)")
-                                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
-                                    setPackage("com.google.android.apps.maps") // Opens specifically in Google Maps app
-                                }
-
-                                context.startActivity(mapIntent)
-
-                            },
-
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = primary
-                            ),
-
-                            modifier = Modifier
-                                .fillMaxWidth() // Make the button take full width
-                                .padding(top = 16.dp) // Padding above the button
-                        ) {
-                            Text(
-                                text = "Localisation sur map",
-                                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp)
-                            )
-                        }
-                    }
+                item {
+                    ServiceCard(R.drawable.checkup_service, "Contrôles routine de voiture", "Vérification des fluides, filtres et composants essentiels pour garantir la performance du véhicule.")
                 }
-
+                item {
+                    ServiceCard(R.drawable.wash_service, "Lavage de voiture", "Lavage extérieur et intérieur pour redonner à votre voiture son éclat et la garder propre.")
+                }
             }
+
         }
     }
 
+}
+
+@Composable
+fun ServiceCard(
+    imageId: Int, // Image URL
+    title: String,
+    description: String
+) {
+    // Card containing an image, title, and description
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp), // Padding around the card
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)), // Background color
+        shape = RoundedCornerShape(16.dp), // Rounded corners
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp) // Shadow elevation
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp) // Padding inside the card
+        ) {
+            // Image section (loads image from URL)
+
+            Image(
+                painter = painterResource(id = imageId),
+                contentDescription = title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp) // Height for the image
+                    .padding(bottom = 13.dp) // Space below the image
+            )
+
+
+            // Title
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                ),
+                color = primary,
+                modifier = Modifier.padding(bottom = 8.dp) // Space below the title
+            )
+
+            // Description
+            Text(
+                text = description,
+                style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
+                color = MaterialTheme.colorScheme.onSurface,
+                maxLines = 2, // Limit description to two lines
+                overflow = TextOverflow.Ellipsis // Ellipsis if text is too long
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ServicesPreview() {
+    ServicePage()
 }
