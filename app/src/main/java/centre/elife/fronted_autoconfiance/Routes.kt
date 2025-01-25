@@ -31,3 +31,5 @@ object AdminRoute
 object DetailsRoute
 @Serializable
 object ServicesRoute
+@Serializable
+object formulaireRDVRoute

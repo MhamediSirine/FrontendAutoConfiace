@@ -11,6 +11,7 @@ import centre.elife.fronted_autoconfiance.data.Dto.UpdateClientProfileDto
 import centre.elife.fronted_autoconfiance.data.models.DeleteProfileResponse
 import centre.elife.fronted_autoconfiance.data.models.LoginResponseModel
 import centre.elife.fronted_autoconfiance.data.models.ProfileDetailsResponse
+import centre.elife.fronted_autoconfiance.data.models.RequestMeetingResponse
 import centre.elife.fronted_autoconfiance.data.models.ResetPasswordResponse
 import centre.elife.fronted_autoconfiance.data.models.SignupResponseModel
 import centre.elife.fronted_autoconfiance.data.models.UpdateProfileResponse
@@ -56,6 +57,12 @@ object ClientService {
     suspend fun updateClientProfile(email: String,name: String, lastName: String,number: String, address: String,token: String): Response<UpdateProfileResponse> {
         val response = api.updateClientAccount(UpdateClientProfileDto(email,name, lastName,number, address), token)
         return response;
+    }
+
+    suspend fun requestMeeting( email: String,carType: String,carLicence: String,name: String,lastName: String,phoneNumber: String,hour: Int,minute: Int,day: Int,month: Int,year: Int, token: String): Response<RequestMeetingResponse> {
+        val response = api.requestMeeting(centre.elife.fronted_autoconfiance.data.Dto.RequestMeetingDto(email, carType, carLicence, name, lastName, phoneNumber, hour, minute, day, month, year), token)
+        return response;
+
     }
 
 

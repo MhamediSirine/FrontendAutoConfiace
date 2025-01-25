@@ -7,6 +7,6 @@ data class ProfileDetails(
     val email: String,
     val birthDate: String? = null, // Optional field for Employee
     val poste: String? = null, // Optional field for Employee
-    val number: String? = null // Optional field for Client
+    val number: String? = null
 )
 

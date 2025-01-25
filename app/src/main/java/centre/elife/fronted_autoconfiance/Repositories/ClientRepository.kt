@@ -2,6 +2,7 @@ package centre.elife.fronted_autoconfiance.Repositories
 
 import centre.elife.fronted_autoconfiance.data.Dto.DeleteAccountDto
 import centre.elife.fronted_autoconfiance.data.Dto.LoginDto
+import centre.elife.fronted_autoconfiance.data.Dto.RequestMeetingDto
 import centre.elife.fronted_autoconfiance.data.Dto.ResetPasswordDto
 import centre.elife.fronted_autoconfiance.data.Dto.SendEmailDto
 import centre.elife.fronted_autoconfiance.data.Dto.SignupDto
@@ -9,6 +10,7 @@ import centre.elife.fronted_autoconfiance.data.Dto.UpdateClientProfileDto
 import centre.elife.fronted_autoconfiance.data.models.DeleteProfileResponse
 import centre.elife.fronted_autoconfiance.data.models.LoginResponseModel
 import centre.elife.fronted_autoconfiance.data.models.ProfileDetailsResponse
+import centre.elife.fronted_autoconfiance.data.models.RequestMeetingResponse
 import centre.elife.fronted_autoconfiance.data.models.ResetPasswordResponse
 import centre.elife.fronted_autoconfiance.data.models.SignupResponseModel
 import centre.elife.fronted_autoconfiance.data.models.UpdateProfileResponse
@@ -45,6 +47,7 @@ interface ClientRepository {
     @PUT("/api/client/update-account")
     // 7ot token fi header esmou Authorization
     suspend fun updateClientAccount(@Body updateClientProfileDto: UpdateClientProfileDto, @Header("Authorization") token: String): Response<UpdateProfileResponse>
-
+    @POST("/api/client/request-meeting")
+    suspend fun requestMeeting(@Body requestMeetingDto: RequestMeetingDto, @Header("Authorization") token: String): Response<RequestMeetingResponse>
 
 }

@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import centre.elife.fronted_autoconfiance.ClientProfileRoute
 import centre.elife.fronted_autoconfiance.HomePageRoute
 import centre.elife.fronted_autoconfiance.Views.HomePage
+import centre.elife.fronted_autoconfiance.formulaireRDVRoute
 import kotlinx.coroutines.launch
 import centre.elife.fronted_autoconfiance.ui.theme.primary
 
@@ -52,7 +53,7 @@ fun ClientProfile(navController: NavHostController) {
                 )
 
                 // Sidebar options
-                val options = listOf("Home", "Profile", "Logout","About")
+                val options = listOf("Home", "Profile","Rendez-vous", "Logout","About")
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
@@ -63,6 +64,7 @@ fun ClientProfile(navController: NavHostController) {
                                     when (option) {
                                         "Home" -> navController.navigate(HomePageRoute)
                                         "Profile" -> navController.navigate(ClientProfileRoute)
+                                        "Rendez-vous" -> navController.navigate(formulaireRDVRoute)
                                         "Logout" -> navController.navigate("logout")
                                         "About" -> navController.navigate("about") }
                                 println("Selected Option: $option")
@@ -74,6 +76,7 @@ fun ClientProfile(navController: NavHostController) {
                             imageVector = when (option) {
                                 "Home" -> Icons.Default.Home
                                 "Profile" -> Icons.Default.Person
+                                "Rendez-vous" -> Icons.Default.Refresh
                                 "Logout" -> Icons.Default.ExitToApp
                                 "About" -> Icons.Default.Info
                                 else -> Icons.Default.Refresh
