@@ -97,7 +97,8 @@ fun FormulaireRDV(navController: NavHostController,requestMeetingViewModel: requ
 
                 val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)
-                val month = calendar.get(Calendar.MONTH) + 1
+//                val month = calendar.get(Calendar.MONTH) + 1
+                val month = 4
                 val day = calendar.get(Calendar.DAY_OF_MONTH)
                 val hour = calendar.get(Calendar.HOUR_OF_DAY)
                 val minute = calendar.get(Calendar.MINUTE)
@@ -164,7 +165,7 @@ fun FormulaireRDV(navController: NavHostController,requestMeetingViewModel: requ
                         onClick = {
                             Log.e("hour", hour.toString())
                             Log.e("minute", minute.toString())
-                          Log.e("day", day.toString())
+                            Log.e("day", day.toString())
                             Log.e("month", month.toString())
                             Log.e("year", year.toString())
                             requestMeetingViewModel.requestMeeting(
@@ -188,7 +189,6 @@ fun FormulaireRDV(navController: NavHostController,requestMeetingViewModel: requ
                                 }
                                 else{
                                     Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-
                                 }
 
                             }
