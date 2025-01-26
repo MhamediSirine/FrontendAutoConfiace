@@ -144,7 +144,7 @@ fun ClientProfile(navController: NavHostController) {
                     ) {
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Profile",
+                            text = "",
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.White
                         )

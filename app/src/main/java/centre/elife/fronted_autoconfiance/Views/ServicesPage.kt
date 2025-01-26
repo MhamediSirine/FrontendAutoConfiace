@@ -37,10 +37,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -63,11 +66,7 @@ import kotlinx.coroutines.launch
 fun ServicePage(navController: androidx.navigation.NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-<<<<<<< Updated upstream
-=======
-    var showDialog by remember { mutableStateOf(false) }
-    val context = LocalContext.current
->>>>>>> Stashed changes
+
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -85,11 +84,9 @@ fun ServicePage(navController: androidx.navigation.NavHostController) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-<<<<<<< Updated upstream
+
                 val options = listOf("Services", "Profile", "Gestion des Employers", "Gestion des Clients", "Logout","About")
-=======
-                val options = listOf("Home", "Profile", "Gestion des Employers", "Gestion des Clients", "Logout", "About")
->>>>>>> Stashed changes
+
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
@@ -168,10 +165,7 @@ fun ServiceCard(
     title: String,
     description: String
 ) {
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -193,10 +187,7 @@ fun ServiceCard(
                     .height(220.dp)
                     .padding(bottom = 13.dp)
             )
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium.copy(
@@ -206,10 +197,8 @@ fun ServiceCard(
                 color = primary,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
+
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),

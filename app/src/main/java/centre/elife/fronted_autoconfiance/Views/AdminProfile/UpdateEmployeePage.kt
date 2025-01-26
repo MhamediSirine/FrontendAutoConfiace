@@ -46,6 +46,7 @@ fun UpdateEmployeePage(navController: NavHostController,viewModel: EmployeeProfi
     var birthDate by remember { mutableStateOf("") }
     val drawerState = rememberDrawerState(initialValue = androidx.compose.material3.DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
     LaunchedEffect(Unit) {
 
         val email = DataStoreManager.getEmailToUpdate(context);
@@ -132,7 +133,7 @@ fun UpdateEmployeePage(navController: NavHostController,viewModel: EmployeeProfi
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Profile") },
+                    title = { Text(" Admin Profile") },
                     navigationIcon = {
                         IconButton(onClick = { scope.launch { drawerState.open() } }) {
                             Icon(Icons.Default.Menu, contentDescription = "Open Menu")
