@@ -54,8 +54,7 @@ fun ClientProfile(navController: NavHostController) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                // Sidebar options
-                val options = listOf("Home", "Profile","Rendez-vous", "Logout","About")
+                val options = listOf("services", "Profile","Rendez-vous", "Logout","About")
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
@@ -76,7 +75,7 @@ fun ClientProfile(navController: NavHostController) {
                     ) {
                         Icon(
                             imageVector = when (option) {
-                                "Home" -> Icons.Default.Home
+                                "Service" -> Icons.Default.Home
                                 "Profile" -> Icons.Default.Person
                                 "Rendez-vous" -> Icons.Default.Refresh
                                 "Logout" -> Icons.Default.ExitToApp

@@ -59,6 +59,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import centre.elife.fronted_autoconfiance.R
 import centre.elife.fronted_autoconfiance.ui.theme.primary
@@ -67,9 +68,11 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ServicePage() {
+fun ServicePage(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+
+
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -206,5 +209,6 @@ fun ServiceCard(
 @Preview(showBackground = true)
 @Composable
 fun ServicesPreview() {
-    ServicePage()
+    val navController = rememberNavController()
+    ServicePage(navController = navController)
 }
