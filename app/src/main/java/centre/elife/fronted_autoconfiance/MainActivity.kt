@@ -94,7 +94,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable<ServicesRoute> {
-                            ServicePage()
+                            ServicePage(navController)
                         }
                         composable<formulaireRDVRoute> {
                             FormulaireRDV(navController)

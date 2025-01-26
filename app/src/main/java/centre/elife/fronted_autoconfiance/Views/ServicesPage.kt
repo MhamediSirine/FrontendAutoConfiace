@@ -1,7 +1,5 @@
 package centre.elife.fronted_autoconfiance.Views
 
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,19 +16,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerValue
@@ -44,35 +37,32 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.AddEmployeeRoute
+import centre.elife.fronted_autoconfiance.DetailsRoute
+import centre.elife.fronted_autoconfiance.ListEmployeeRoute
+import centre.elife.fronted_autoconfiance.LoginRoute
+import centre.elife.fronted_autoconfiance.ProfileAdminRoute
 import centre.elife.fronted_autoconfiance.R
+import centre.elife.fronted_autoconfiance.ServicesRoute
 import centre.elife.fronted_autoconfiance.ui.theme.primary
-import coil.compose.rememberImagePainter
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ServicePage() {
+fun ServicePage(navController: androidx.navigation.NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    var showDialog by remember { mutableStateOf(false) } // State to control the popup dialog
-    val context = LocalContext.current
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -90,23 +80,31 @@ fun ServicePage() {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                val options = listOf("Home", "Profile", "Gestion des Employers", "Gestion des Clients", "Logout","About")
+                val options = listOf("Services", "Profile", "Gestion des Employers", "Gestion des Clients", "Logout","About")
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                scope.launch { drawerState.close() }
-                                println("Selected Option: $option")
-                            }
+                                scope.launch { drawerState.close()
+                                    when (option) {
+                                        "Services" -> navController.navigate(ServicesRoute)
+                                        "Profile" -> navController.navigate(ProfileAdminRoute)
+                                        "Employee Management" -> navController.navigate(ListEmployeeRoute)
+                                        "Add Employee" -> navController.navigate(AddEmployeeRoute)
+                                        "Logout" -> navController.navigate(LoginRoute)
+                                        "About" -> navController.navigate(DetailsRoute) }
+                                    println("Selected Option: $option")
+                                }}
                             .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
                             imageVector = when (option) {
-                                "Home" -> Icons.Default.Home
+                                "Services" -> Icons.Default.Home
                                 "Profile" -> Icons.Default.Person
                                 "Gestion des Employers" -> Icons.Default.Settings
+                                "Add Employee" -> Icons.Default.Add
                                 "Gestion des Clients" -> Icons.Default.Settings
                                 "Logout" -> Icons.Default.ExitToApp
                                 "About" -> Icons.Default.Info
@@ -159,37 +157,33 @@ fun ServicePage() {
 
 @Composable
 fun ServiceCard(
-    imageId: Int, // Image URL
+    imageId: Int,
     title: String,
     description: String
 ) {
-    // Card containing an image, title, and description
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp), // Padding around the card
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)), // Background color
-        shape = RoundedCornerShape(16.dp), // Rounded corners
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp) // Shadow elevation
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp) // Padding inside the card
+                .padding(16.dp)
         ) {
-            // Image section (loads image from URL)
-
             Image(
                 painter = painterResource(id = imageId),
                 contentDescription = title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(220.dp) // Height for the image
-                    .padding(bottom = 13.dp) // Space below the image
+                    .height(220.dp)
+                    .padding(bottom = 13.dp)
             )
 
-
-            // Title
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium.copy(
@@ -197,16 +191,15 @@ fun ServiceCard(
                     fontWeight = FontWeight.Bold
                 ),
                 color = primary,
-                modifier = Modifier.padding(bottom = 8.dp) // Space below the title
+                modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            // Description
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
                 color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 2, // Limit description to two lines
-                overflow = TextOverflow.Ellipsis // Ellipsis if text is too long
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -215,5 +208,5 @@ fun ServiceCard(
 @Preview(showBackground = true)
 @Composable
 fun ServicesPreview() {
-    ServicePage()
+    ServicePage(navController =rememberNavController())
 }

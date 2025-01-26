@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.ExitToApp
@@ -55,16 +56,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.AddEmployeeRoute
+import centre.elife.fronted_autoconfiance.AdminRoute
+import centre.elife.fronted_autoconfiance.DetailsRoute
+import centre.elife.fronted_autoconfiance.ListEmployeeRoute
+import centre.elife.fronted_autoconfiance.LoginRoute
+import centre.elife.fronted_autoconfiance.ServicesRoute
 import centre.elife.fronted_autoconfiance.ui.theme.primary
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsPage(navController: NavHostController) {
-    // State for the sidebar (drawer)
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    var showDialog by remember { mutableStateOf(false)} // State to control the popup dialog
     val context = LocalContext.current
 
     ModalNavigationDrawer(
@@ -83,26 +88,32 @@ fun DetailsPage(navController: NavHostController) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                // Sidebar options
-                val options = listOf("Home", "Profile", "Gestion des Employers", "Gestion des Clients", "Logout","About")
+                val options = listOf("Services", "Profile", "Employee Management","Add Employee",  "Logout","About")
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable {
-                                // Handle sidebar option click
-                                scope.launch { drawerState.close() }
+                            .clickable { scope.launch { drawerState.close()
+                                when (option) {
+                                    "Services" -> navController.navigate(ServicesRoute)
+                                    "Profile" -> navController.navigate(AdminRoute)
+                                    "Employee Management" -> navController.navigate(
+                                        ListEmployeeRoute
+                                    )
+                                    "Add Employee" -> navController.navigate(AddEmployeeRoute)
+                                    "Logout" -> navController.navigate(LoginRoute)
+                                    "About" -> navController.navigate(DetailsRoute) }
                                 println("Selected Option: $option")
-                            }
+                            }}
                             .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
                             imageVector = when (option) {
-                                "Home" -> Icons.Default.Home
+                                "Services" -> Icons.Default.Home
                                 "Profile" -> Icons.Default.Person
-                                "Gestion des Employers" -> Icons.Default.Settings
-                                "Gestion des Clients" -> Icons.Default.Settings
+                                "Employee Management" -> Icons.Default.Settings
+                                "Add Employee" -> Icons.Default.Add
                                 "Logout" -> Icons.Default.ExitToApp
                                 "About" -> Icons.Default.Info
                                 else -> Icons.Default.Refresh
@@ -136,23 +147,19 @@ fun DetailsPage(navController: NavHostController) {
                     .padding(paddingValues)
                     .background(Color.White)
             ) {
-                // Profile header section
-
-
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp), // Outer padding around the card
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)), // Light gray background for the card
-                    shape = RoundedCornerShape(16.dp), // Rounded corners for a modern look
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp) // Shadow for a subtle 3D effect
+                        .padding(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp) // Inner padding for the card content
+                            .padding(16.dp)
                     ) {
-                        // Title
                         Text(
                             text = "À Propos de Auto Confiance",
                             style = MaterialTheme.typography.titleLarge.copy(
@@ -160,10 +167,8 @@ fun DetailsPage(navController: NavHostController) {
                                 fontWeight = FontWeight.Bold
                             ),
                             color = primary,
-                            modifier = Modifier.padding(bottom = 8.dp) // Space below the title
+                            modifier = Modifier.padding(bottom = 8.dp)
                         )
-
-                        // Description
                         Text(
                             text = "\"Auto Confiance\" est votre partenaire de confiance pour l’entretien et la vidange de votre véhicule. Avec une équipe expérimentée et des services rapides, fiables et abordables, nous veillons à ce que votre moteur reste en parfait état.",
                             style = MaterialTheme.typography.bodyMedium.copy(
@@ -171,7 +176,7 @@ fun DetailsPage(navController: NavHostController) {
                                 lineHeight = 22.sp
                             ),
                             color = MaterialTheme.colorScheme.onBackground,
-                            textAlign = TextAlign.Justify, // Aligns the text for a clean look
+                            textAlign = TextAlign.Justify,
                             modifier = Modifier.padding(8.dp)
                         )
                     }
@@ -180,17 +185,16 @@ fun DetailsPage(navController: NavHostController) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp), // Padding around the card
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)), // Background color
-                    shape = RoundedCornerShape(16.dp), // Rounded corners
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp) // Shadow elevation
+                        .padding(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF5F5F5)),
+                    shape = RoundedCornerShape(16.dp),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
                 ) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp) // Inner padding for the card content
+                            .padding(16.dp)
                     ) {
-                        // Title
                         Text(
                             text = "Contactez-nous",
                             style = MaterialTheme.typography.titleLarge.copy(
@@ -198,10 +202,8 @@ fun DetailsPage(navController: NavHostController) {
                                 fontWeight = FontWeight.Bold
                             ),
                             color = primary,
-                            modifier = Modifier.padding(bottom = 8.dp) // Space below the title
+                            modifier = Modifier.padding(bottom = 8.dp)
                         )
-
-                        // Contact options
                         ContactOption(icon = Icons.Default.Email, label = "autoconfience@gmail.com")
                         ContactOption(icon = Icons.Default.Phone, label = "+216 71 180 196")
                         ContactOption(icon = Icons.Default.LocationOn, label = "Zone Industrielle Kheireddine, Lac 3, Tunis")
@@ -227,8 +229,8 @@ fun DetailsPage(navController: NavHostController) {
                             ),
 
                             modifier = Modifier
-                                .fillMaxWidth() // Make the button take full width
-                                .padding(top = 16.dp) // Padding above the button
+                                .fillMaxWidth()
+                                .padding(top = 16.dp)
                         ) {
                             Text(
                                 text = "Localisation sur map",
@@ -248,7 +250,7 @@ fun ContactOption(icon: ImageVector, label: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* Handle option click */ }
+            .clickable {}
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
