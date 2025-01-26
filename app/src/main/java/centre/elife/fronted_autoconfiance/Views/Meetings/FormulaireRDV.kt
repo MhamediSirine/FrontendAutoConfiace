@@ -97,7 +97,7 @@ fun FormulaireRDV(navController: NavHostController,requestMeetingViewModel: requ
 
                 val calendar = Calendar.getInstance()
                 val year = calendar.get(Calendar.YEAR)
-                val month = calendar.get(Calendar.MONTH)
+                val month = calendar.get(Calendar.MONTH) + 1
                 val day = calendar.get(Calendar.DAY_OF_MONTH)
                 val hour = calendar.get(Calendar.HOUR_OF_DAY)
                 val minute = calendar.get(Calendar.MINUTE)
@@ -105,7 +105,7 @@ fun FormulaireRDV(navController: NavHostController,requestMeetingViewModel: requ
                 val datePickerDialog = DatePickerDialog(
                     context,
                     { _, selectedYear, selectedMonth, selectedDay ->
-                        date = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                        date = "$selectedDay/${selectedMonth}/$selectedYear"
                     },
                     year, month, day
                 )
@@ -165,6 +165,8 @@ fun FormulaireRDV(navController: NavHostController,requestMeetingViewModel: requ
                             Log.e("hour", hour.toString())
                             Log.e("minute", minute.toString())
                           Log.e("day", day.toString())
+                            Log.e("month", month.toString())
+                            Log.e("year", year.toString())
                             requestMeetingViewModel.requestMeeting(
                                 userEmail,
                                 carType,
@@ -189,10 +191,7 @@ fun FormulaireRDV(navController: NavHostController,requestMeetingViewModel: requ
 
                                 }
 
-
                             }
-
-                            
 
                         },
                         modifier = Modifier.weight(1f).padding(end = 8.dp)

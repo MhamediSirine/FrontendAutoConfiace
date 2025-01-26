@@ -35,3 +35,5 @@ object ServicesRoute
 object formulaireRDVRoute
 @Serializable
 object ClientListAppointmentRoute
+@Serializable
+object AcceptedMeetingsRoute

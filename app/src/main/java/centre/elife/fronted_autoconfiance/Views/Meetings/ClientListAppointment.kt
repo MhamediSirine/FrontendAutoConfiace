@@ -1,24 +1,27 @@
 package centre.elife.fronted_autoconfiance.Views
 
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.ViewModels.MeetingViewModel
+import centre.elife.fronted_autoconfiance.data.models.Meeting
 import centre.elife.fronted_autoconfiance.ui.theme.background
 import centre.elife.fronted_autoconfiance.ui.theme.primary
 
@@ -32,18 +35,21 @@ data class Appointments(
 )
 
 @Composable
-fun ClientListAppointment(navController: NavHostController) {
-    val appointments = remember {
-        mutableStateListOf(
-            Appointments("John Doe", "10/01/2025", "10:30 AM", "Toyota", "ABC-5897", "Accepted"),
-            Appointments("Jane Smith", "11/01/2025", "2:00 PM", "Honda", "XYZ-5678", "Declined"),
-            Appointments("Mike Johnson", "12/01/2025", "4:45 PM", "Ford", "DEF-8901", "Pending")
-        )
+fun ClientListAppointment(navController: NavHostController, meetingViewModel: MeetingViewModel = MeetingViewModel()) {
+
+    var meetingsList by remember { mutableStateOf(emptyList<Meeting>()) }
+
+    LaunchedEffect(Unit) {
+        meetingViewModel.fetchPendingMeetings()
+
+        meetingViewModel.pendingMeetings.observeForever {
+            meetings -> meetingsList = meetings
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize().background(Color.White)) {
         // Header Canvas
-        CanvasHeaderCL()
+        CanvasHeaderCL("Pending meetings")
 
         // Content
         Column(
@@ -55,8 +61,8 @@ fun ClientListAppointment(navController: NavHostController) {
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp)
             ) {
-                items(appointments) { appointment ->
-                    ClientAppointmentItem(appointment)
+                items(meetingsList) { meeting ->
+                    ClientAppointmentItem(meeting)
                     Divider(
                         color = Color.Gray,
                         thickness = 1.dp,
@@ -66,21 +72,11 @@ fun ClientListAppointment(navController: NavHostController) {
             }
         }
 
-        // Floating Action Button
-        FloatingActionButton(
-            onClick = { navController.navigate("formulaireRDV") },
-            containerColor = MaterialTheme.colorScheme.primary,
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp)
-        ) {
-            Icon(Icons.Default.Add, contentDescription = "Add Appointment")
-        }
     }
 }
 
 @Composable
-fun CanvasHeaderCL() {
+fun CanvasHeaderCL(title: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -109,7 +105,7 @@ fun CanvasHeaderCL() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Appointments",
+                text = title,
                 style = MaterialTheme.typography.titleLarge,
                 color = Color.White,
                 fontSize = 24.sp,
@@ -121,8 +117,10 @@ fun CanvasHeaderCL() {
 
 @Composable
 fun ClientAppointmentItem(
-    appointment: Appointments
+    meeting: Meeting,
+    meetingViewModel: MeetingViewModel = MeetingViewModel()
 ) {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -134,23 +132,52 @@ fun ClientAppointmentItem(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = "Name: ${appointment.name}",
+                text = "Name: ${meeting.name} ${meeting.lastName}",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 color = background
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Date: ${appointment.date}", fontSize = 16.sp)
-            Text(text = "Time: ${appointment.time}", fontSize = 16.sp)
-            Text(text = "Car: ${appointment.carBrand}", fontSize = 16.sp)
-            Text(text = "Register: ${appointment.carRegister}", fontSize = 16.sp)
-            Text(text = "Status: ${appointment.status}", fontSize = 16.sp, color = Color.Gray)
+            Text(text = "Date: ${meeting.day} / ${meeting.month} / ${meeting.year}", fontSize = 16.sp)
+            Text(text = "Time: ${meeting.hour} : ${meeting.minute}", fontSize = 16.sp)
+            Text(text = "Car: ${meeting.carType}", fontSize = 16.sp)
+            Text(text = "Register: ${meeting.carLicence}", fontSize = 16.sp)
+        }
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = {
+                meetingViewModel.handleMeeting(meeting.id, true)
+
+                meetingViewModel.success.observeForever { success ->
+                    if (success) Toast.makeText(context, "Meeting has been accepted", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(context, "Error accepting meeting", Toast.LENGTH_SHORT).show()
+                }
+
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Accept",
+                    tint = Color.Green
+                )
+            }
+
+            IconButton(onClick = {
+                meetingViewModel.handleMeeting(meeting.id, false)
+
+                meetingViewModel.success.observeForever { success ->
+                    if (success) Toast.makeText(context, "Meeting has been rejected", Toast.LENGTH_SHORT).show()
+                    else Toast.makeText(context, "Error rejecting meeting", Toast.LENGTH_SHORT).show()
+                }
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Refuse",
+                    tint = Color.Red
+                )
+            }
         }
     }
-}
-
-@Preview
-@Composable
-fun ClientListAppointmentPreview() {
-    ClientListAppointment(navController = rememberNavController())
 }

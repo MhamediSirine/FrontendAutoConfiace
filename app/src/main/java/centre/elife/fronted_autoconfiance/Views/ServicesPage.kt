@@ -72,8 +72,6 @@ fun ServicePage(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-
-
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {

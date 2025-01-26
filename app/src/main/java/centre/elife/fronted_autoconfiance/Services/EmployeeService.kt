@@ -3,7 +3,9 @@ package centre.elife.fronted_autoconfiance.Services
 import android.media.session.MediaSession.Token
 import centre.elife.fronted_autoconfiance.ApiInit.ApiInit
 import centre.elife.fronted_autoconfiance.Repositories.EmployeeRepository
+import centre.elife.fronted_autoconfiance.data.Dto.HandleMeeting
 import centre.elife.fronted_autoconfiance.data.Dto.UpdateEmployeeAccountDto
+import centre.elife.fronted_autoconfiance.data.models.PendingMeeting
 import centre.elife.fronted_autoconfiance.data.models.UpdateProfileResponse
 import retrofit2.Response
 
@@ -13,4 +15,21 @@ object EmployeeService {
         val response = api.updateEmployeeAccount(token, UpdateEmployeeAccountDto(email, name, lastName, address, birthDate))
         return response
     }
+
+    suspend fun fetchPendingMeetings(): Response<PendingMeeting> {
+        val response = api.getPendingMeetings()
+        return response
+    }
+
+    suspend fun handleMeeting(meetingId: Int, accepted: Boolean): Response<UpdateProfileResponse> {
+        val meetingData = HandleMeeting(meetingId, accepted)
+        val response = api.handleMeeting(meetingData)
+        return response
+    }
+
+    suspend fun fetchAcceptedMeetings(): Response<PendingMeeting> {
+        val response = api.fetchAcceptedMeetings()
+        return response
+    }
+
 }

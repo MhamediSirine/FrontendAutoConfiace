@@ -16,6 +16,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.Views.AcceptedMeetings
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.AddEmployee
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.AdminProfile
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.GestionEmployers
@@ -40,13 +41,13 @@ class MainActivity : ComponentActivity() {
         setContent {
             Fronted_AutoConfianceTheme {
                 val navController = rememberNavController()
-                val context = LocalContext.current
+                LocalContext.current
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = ClientProfileRoute,
+                        startDestination = LoginRoute,
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable<HomePageRoute> {
@@ -96,6 +97,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<ClientListAppointmentRoute> {
                             ClientListAppointment(navController)
+                        }
+                        composable<AcceptedMeetingsRoute> {
+                            AcceptedMeetings(navController)
                         }
                     }
                 }
