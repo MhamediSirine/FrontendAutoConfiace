@@ -1,31 +1,25 @@
 package centre.elife.fronted_autoconfiance.Views.EmployeeProfile
 
-
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-
+import centre.elife.fronted_autoconfiance.ClientListAppointmentRoute
+import centre.elife.fronted_autoconfiance.DetailsRoute
+import centre.elife.fronted_autoconfiance.EmployeeProfileRoute
+import centre.elife.fronted_autoconfiance.HomePageRoute
+import centre.elife.fronted_autoconfiance.ServicesRoute
 import centre.elife.fronted_autoconfiance.Views.ClientProfile.Header
 import kotlinx.coroutines.launch
 import centre.elife.fronted_autoconfiance.ui.theme.primary
@@ -36,8 +30,6 @@ fun EmployeeProfile(navController: NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var showDialog by remember { mutableStateOf(false) }
-
-
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -55,25 +47,31 @@ fun EmployeeProfile(navController: NavHostController) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                // Sidebar options
-                val options = listOf("Home", "Profile", "Logout","Gestion Client", "About")
+                val options = listOf("Services", "Profile", "Logout", "Client Management", "About")
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                // Handle sidebar option click
-                                scope.launch { drawerState.close() }
-                                println("Selected Option: $option")
+                                scope.launch {
+                                    drawerState.close()
+                                    when (option) {
+                                        "Services" -> navController.navigate(ServicesRoute)
+                                        "Profile" -> navController.navigate(EmployeeProfileRoute)
+                                        "Logout" -> navController.navigate(HomePageRoute)
+                                        "Client Management" -> navController.navigate(ClientListAppointmentRoute)
+                                        "About" -> navController.navigate(DetailsRoute)
+                                    }
+                                }
                             }
                             .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
                             imageVector = when (option) {
-                                "Home" -> Icons.Default.Home
+                                "Services" -> Icons.Default.Home
                                 "Profile" -> Icons.Default.Person
-                                "Gestion Client" -> Icons.Default.Settings
+                                "Client Management" -> Icons.Default.Settings
                                 "Logout" -> Icons.Default.ExitToApp
                                 "About" -> Icons.Default.Info
                                 else -> Icons.Default.Refresh
@@ -107,8 +105,7 @@ fun EmployeeProfile(navController: NavHostController) {
                     .padding(paddingValues)
                     .background(Color.White)
             ) {
-
-                Header( navController)
+                Header(navController)
                 Spacer(modifier = Modifier.height(8.dp))
                 Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                     TextButton(onClick = { showDialog = true }) {

@@ -23,7 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import centre.elife.fronted_autoconfiance.ClientProfileRoute
+import centre.elife.fronted_autoconfiance.DetailsRoute
 import centre.elife.fronted_autoconfiance.HomePageRoute
+import centre.elife.fronted_autoconfiance.ServicesRoute
 import centre.elife.fronted_autoconfiance.Views.HomePage
 import centre.elife.fronted_autoconfiance.formulaireRDVRoute
 import kotlinx.coroutines.launch
@@ -62,11 +64,11 @@ fun ClientProfile(navController: NavHostController) {
 
                                 scope.launch { drawerState.close()
                                     when (option) {
-                                        "Home" -> navController.navigate(HomePageRoute)
+                                        "Services" -> navController.navigate(ServicesRoute)
                                         "Profile" -> navController.navigate(ClientProfileRoute)
                                         "Rendez-vous" -> navController.navigate(formulaireRDVRoute)
-                                        "Logout" -> navController.navigate("logout")
-                                        "About" -> navController.navigate("about") }
+                                        "Logout" -> navController.navigate(HomePageRoute)
+                                        "About" -> navController.navigate(DetailsRoute) }
                                 println("Selected Option: $option")
                             }}
                             .padding(vertical = 8.dp),
@@ -142,7 +144,7 @@ fun ClientProfile(navController: NavHostController) {
                     ) {
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Medini Meriem",
+                            text = "Profile",
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.White
                         )

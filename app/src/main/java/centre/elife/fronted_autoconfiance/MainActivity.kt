@@ -20,6 +20,7 @@ import centre.elife.fronted_autoconfiance.Views.AdminProfile.AddEmployee
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.AdminProfile
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.GestionEmployers
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.UpdateEmployeePage
+import centre.elife.fronted_autoconfiance.Views.ClientListAppointment
 import centre.elife.fronted_autoconfiance.Views.ClientProfile.ClientProfile
 import centre.elife.fronted_autoconfiance.Views.DetailsPage
 import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.EmployeeProfile
@@ -42,13 +43,12 @@ class MainActivity : ComponentActivity() {
                 val context = LocalContext.current
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                            startDestination = LoginRoute,
-                        modifier = Modifier.padding(innerPadding)    ) {
-
+                        startDestination = ClientProfileRoute,
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
                         composable<HomePageRoute> {
                             HomePage(navController)
                         }
@@ -79,25 +79,23 @@ class MainActivity : ComponentActivity() {
                         composable<ModifyEmployeeRoute> {
                             UpdateEmployeePage(navController)
                         }
-
                         composable<ListEmployeeRoute> {
                             GestionEmployers(navController)
-
                         }
-
                         composable<DetailsRoute> {
                             DetailsPage(navController)
                         }
-
                         composable<AdminRoute> {
                             AdminProfile(navController)
                         }
-
                         composable<ServicesRoute> {
                             ServicePage(navController)
                         }
                         composable<formulaireRDVRoute> {
                             FormulaireRDV(navController)
+                        }
+                        composable<ClientListAppointmentRoute> {
+                            ClientListAppointment(navController)
                         }
                     }
                 }
@@ -122,4 +120,3 @@ fun GreetingPreview() {
         SignUp(navController = navController)
     }
 }
-

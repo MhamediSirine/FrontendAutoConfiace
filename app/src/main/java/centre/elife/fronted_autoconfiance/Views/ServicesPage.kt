@@ -63,6 +63,11 @@ import kotlinx.coroutines.launch
 fun ServicePage(navController: androidx.navigation.NavHostController) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+<<<<<<< Updated upstream
+=======
+    var showDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+>>>>>>> Stashed changes
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -80,7 +85,11 @@ fun ServicePage(navController: androidx.navigation.NavHostController) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
+<<<<<<< Updated upstream
                 val options = listOf("Services", "Profile", "Gestion des Employers", "Gestion des Clients", "Logout","About")
+=======
+                val options = listOf("Home", "Profile", "Gestion des Employers", "Gestion des Clients", "Logout", "About")
+>>>>>>> Stashed changes
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
@@ -149,10 +158,8 @@ fun ServicePage(navController: androidx.navigation.NavHostController) {
                     ServiceCard(R.drawable.wash_service, "Lavage de voiture", "Lavage extérieur et intérieur pour redonner à votre voiture son éclat et la garder propre.")
                 }
             }
-
         }
     }
-
 }
 
 @Composable
@@ -161,7 +168,10 @@ fun ServiceCard(
     title: String,
     description: String
 ) {
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -183,7 +193,10 @@ fun ServiceCard(
                     .height(220.dp)
                     .padding(bottom = 13.dp)
             )
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium.copy(
@@ -193,7 +206,10 @@ fun ServiceCard(
                 color = primary,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium.copy(fontSize = 14.sp),
