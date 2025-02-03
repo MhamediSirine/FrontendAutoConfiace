@@ -52,15 +52,19 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.compose.runtime:runtime-livedata:1.5.1")
 
-    implementation ("androidx.compose.runtime:runtime-livedata:1.5.1" // Use the latest version
-)
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation ("com.google.maps.android:maps-compose:2.13.0")
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
+
+
+
     implementation(libs.androidx.core.ktx)
 
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -72,8 +76,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.play.services.cast.framework)
-    implementation(libs.androidx.storage)
+
+    implementation(libs.play.services.maps)
+    implementation("io.coil-kt:coil-compose:2.2.2")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

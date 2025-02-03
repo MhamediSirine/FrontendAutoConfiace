@@ -2,9 +2,11 @@ package centre.elife.fronted_autoconfiance.Repositories
 
 import centre.elife.fronted_autoconfiance.data.Dto.EmployeeDto
 import centre.elife.fronted_autoconfiance.data.Dto.ModifyDto
+import centre.elife.fronted_autoconfiance.data.Dto.UpdateAdminDto
 import centre.elife.fronted_autoconfiance.data.models.EmployeeResponse
 import centre.elife.fronted_autoconfiance.data.models.ListProfileResponse
 import centre.elife.fronted_autoconfiance.data.models.ProfileDetailsResponse
+import centre.elife.fronted_autoconfiance.data.models.UpdateProfileResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,7 +20,7 @@ interface AdminRepository{
     @GET("/api/admin/employees-list ")
     suspend fun getEmployees(@Header("Authorization") token: String):Response<ListProfileResponse>
     @PUT("/api/admin/update-employee")
-    suspend fun updateEmployee(@Body employeeData: ModifyDto,@Header("Authorization") token: String):Response<EmployeeResponse>
-
-
+    suspend fun updateEmployee(@Body employeeData: ModifyDto,@Header("Authorization") token: String):Response<UpdateProfileResponse>
+    @PUT("/api/admin/update-account")
+    suspend fun updateAccount(@Body employeeData: UpdateAdminDto, @Header("Authorization") token: String):Response<UpdateProfileResponse>
 }

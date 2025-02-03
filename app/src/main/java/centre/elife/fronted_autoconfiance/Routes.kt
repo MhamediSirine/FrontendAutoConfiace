@@ -27,3 +27,16 @@ object DeleteEmployeeRoute
 @Serializable
 object ListEmployeeRoute
 
+@Serializable
+object AdminRoute
+@Serializable
+object DetailsRoute
+@Serializable
+object ServicesRoute
+@Serializable
+object formulaireRDVRoute
+@Serializable
+object ClientListAppointmentRoute
+@Serializable
+object AcceptedMeetingsRoute
+

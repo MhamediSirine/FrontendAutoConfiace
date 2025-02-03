@@ -22,6 +22,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.ClientProfileRoute
+import centre.elife.fronted_autoconfiance.DetailsRoute
+import centre.elife.fronted_autoconfiance.HomePageRoute
+import centre.elife.fronted_autoconfiance.ServicesRoute
+import centre.elife.fronted_autoconfiance.Views.HomePage
+import centre.elife.fronted_autoconfiance.formulaireRDVRoute
 import kotlinx.coroutines.launch
 import centre.elife.fronted_autoconfiance.ui.theme.primary
 
@@ -48,24 +54,30 @@ fun ClientProfile(navController: NavHostController) {
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
 
-                // Sidebar options
-                val options = listOf("Home", "Profile", "Logout","About")
+                val options = listOf("services", "Profile","Rendez-vous", "Logout","About")
                 options.forEach { option ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable {
-                                // Handle sidebar option click
-                                scope.launch { drawerState.close() }
+
+                                scope.launch { drawerState.close()
+                                    when (option) {
+                                        "Services" -> navController.navigate(ServicesRoute)
+                                        "Profile" -> navController.navigate(ClientProfileRoute)
+                                        "Rendez-vous" -> navController.navigate(formulaireRDVRoute)
+                                        "Logout" -> navController.navigate(HomePageRoute)
+                                        "About" -> navController.navigate(DetailsRoute) }
                                 println("Selected Option: $option")
-                            }
+                            }}
                             .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
                             imageVector = when (option) {
-                                "Home" -> Icons.Default.Home
+                                "Service" -> Icons.Default.Home
                                 "Profile" -> Icons.Default.Person
+                                "Rendez-vous" -> Icons.Default.Refresh
                                 "Logout" -> Icons.Default.ExitToApp
                                 "About" -> Icons.Default.Info
                                 else -> Icons.Default.Refresh
@@ -131,7 +143,7 @@ fun ClientProfile(navController: NavHostController) {
                     ) {
                         Spacer(modifier = Modifier.height(5.dp))
                         Text(
-                            text = "Medini Meriem",
+                            text = "",
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.White
                         )

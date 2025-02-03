@@ -2,13 +2,16 @@ package centre.elife.fronted_autoconfiance.Services
 
 import centre.elife.fronted_autoconfiance.ApiInit.ApiInit
 import centre.elife.fronted_autoconfiance.Repositories.ClientRepository
+import centre.elife.fronted_autoconfiance.data.Dto.DeleteAccountDto
 import centre.elife.fronted_autoconfiance.data.Dto.LoginDto
 import centre.elife.fronted_autoconfiance.data.Dto.ResetPasswordDto
 import centre.elife.fronted_autoconfiance.data.Dto.SendEmailDto
 import centre.elife.fronted_autoconfiance.data.Dto.SignupDto
 import centre.elife.fronted_autoconfiance.data.Dto.UpdateClientProfileDto
+import centre.elife.fronted_autoconfiance.data.models.DeleteProfileResponse
 import centre.elife.fronted_autoconfiance.data.models.LoginResponseModel
 import centre.elife.fronted_autoconfiance.data.models.ProfileDetailsResponse
+import centre.elife.fronted_autoconfiance.data.models.RequestMeetingResponse
 import centre.elife.fronted_autoconfiance.data.models.ResetPasswordResponse
 import centre.elife.fronted_autoconfiance.data.models.SignupResponseModel
 import centre.elife.fronted_autoconfiance.data.models.UpdateProfileResponse
@@ -41,13 +44,29 @@ object ClientService {
 
     }
 
-    suspend fun updateClientProfile(updateClientProfile: UpdateClientProfileDto, token: String): Response<UpdateProfileResponse> {
-        val response = api.updateClientAccount(updateClientProfile, token)
-        return response;
-    }
     suspend fun getProfile(email: String, token: String): Response<ProfileDetailsResponse> {
         val response = api.getProfile(email,token)
         return response;
 
     }
+    suspend fun deleteAccount(email: String, password: String, token: String): Response<DeleteProfileResponse> {
+        val deleteAccountDto = DeleteAccountDto(email, password)
+        val response = api.deleteAccount(deleteAccountDto, token)
+        return response;
+    }
+    suspend fun updateClientProfile(email: String,name: String, lastName: String,number: String, address: String,token: String): Response<UpdateProfileResponse> {
+        val response = api.updateClientAccount(UpdateClientProfileDto(email,name, lastName,number, address), token)
+        return response;
+    }
+
+    suspend fun requestMeeting( email: String,carType: String,carLicence: String,name: String,lastName: String,phoneNumber: String,hour: Int,minute: Int,day: Int,month: Int,year: Int, token: String): Response<RequestMeetingResponse> {
+        val response = api.requestMeeting(centre.elife.fronted_autoconfiance.data.Dto.RequestMeetingDto(email, carType, carLicence, name, lastName, phoneNumber, hour, minute, day, month, year), token)
+        return response;
+
+    }
+
+
+
+
+
 }

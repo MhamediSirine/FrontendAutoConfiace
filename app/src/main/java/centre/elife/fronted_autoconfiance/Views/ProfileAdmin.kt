@@ -48,7 +48,7 @@ fun ProfileAdmin(navController: NavHostController,profileViewModel: ProfileViewM
     val context = LocalContext.current
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    var showDialog by remember { mutableStateOf(false)} // State to control the popup dialog
+    var showDialog by remember { mutableStateOf(false)}
 
     ModalNavigationDrawer(
         drawerState = drawerState,

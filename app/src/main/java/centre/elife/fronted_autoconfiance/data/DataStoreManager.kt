@@ -20,6 +20,7 @@ object DataStoreManager {
     private val EMAIL_KEY = stringPreferencesKey(name = "email")
     private val IS_LOGGED_IN_KEY = booleanPreferencesKey(name = "is_logged_in")
     private val TOKEN_KEY = stringPreferencesKey(name = "token")
+    private val EMAIL_TO_UPDATE = stringPreferencesKey(name = "email_to_update")
 
 
     // Method to store user details
@@ -48,6 +49,15 @@ object DataStoreManager {
     suspend fun setEmail(context: Context, email: String) {
         context.dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = email
+        }
+    }
+
+    suspend fun getEmailToUpdate(context: Context): String =
+        context.dataStore.data.map { preferences -> preferences[EMAIL_TO_UPDATE] ?: "" }.first()
+
+    suspend fun setEmailToUpdate(context: Context, email: String) {
+        context.dataStore.edit {
+            preferences -> preferences[EMAIL_TO_UPDATE] = email;
         }
     }
 

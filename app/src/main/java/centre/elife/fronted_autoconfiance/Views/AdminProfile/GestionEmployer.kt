@@ -1,15 +1,19 @@
 
 package centre.elife.fronted_autoconfiance.Views.AdminProfile
 
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,7 +22,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerState
@@ -28,8 +38,10 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -49,9 +61,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import centre.elife.fronted_autoconfiance.AddEmployeeRoute
+import centre.elife.fronted_autoconfiance.AdminRoute
 import centre.elife.fronted_autoconfiance.DataStoreManager.DataStoreManager
+import centre.elife.fronted_autoconfiance.DetailsRoute
+import centre.elife.fronted_autoconfiance.ListEmployeeRoute
+import centre.elife.fronted_autoconfiance.LoginRoute
 import centre.elife.fronted_autoconfiance.Models.Employee
 import centre.elife.fronted_autoconfiance.ModifyEmployeeRoute
+import centre.elife.fronted_autoconfiance.ServicesRoute
 import centre.elife.fronted_autoconfiance.ViewModels.ListEmployeeViewModel
 import centre.elife.fronted_autoconfiance.data.models.ProfileDetails
 
@@ -66,12 +83,15 @@ fun GestionEmployers(navController: NavHostController,ListEmployeeViewModel: Lis
 val context = LocalContext.current
     val employeeToDelete = remember { mutableStateOf<Employee?>(null) }
     val showDeleteConfirmation = remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+    val drawerState = rememberDrawerState(initialValue = androidx.compose.material3.DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
     LaunchedEffect(Unit) {
         val token = DataStoreManager.getToken(context);
         ListEmployeeViewModel.getEmployees(token)
         ListEmployeeViewModel.success.observeForever { success ->
             if (!success) {
-                // Handle error
+
             } else {
                 ListEmployeeViewModel.employees.observeForever { newEmployees ->
                     employees = newEmployees
@@ -82,17 +102,77 @@ val context = LocalContext.current
 
     }}
 
-    Scaffold(
-        topBar = { TopSectionBox (scope = rememberCoroutineScope(), drawerState = rememberDrawerState(
-            DrawerValue.Closed))
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate(AddEmployeeRoute) }) {
 
-                Icon(Icons.Default.Add, contentDescription = "Add Employer")
+
+    ModalNavigationDrawer(
+        drawerState = drawerState,
+        drawerContent = {
+            Column(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .width(250.dp)
+                    .background(Color.White)
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "Menu",
+                    style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+                    modifier = Modifier.padding(bottom = 16.dp)
+                )
+
+                val options = listOf("Services", "Profile","Employee Management", "Add Employee", "Logout", "About")
+                options.forEach { option ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                scope.launch { drawerState.close()
+                                    when (option) {
+                                        "Services" -> navController.navigate(ServicesRoute)
+                                        "Profile" -> navController.navigate(AdminRoute)
+                                        "Employee Management" -> navController.navigate(ListEmployeeRoute)
+                                        "Add Employee" -> navController.navigate(AddEmployeeRoute)
+                                        "Logout" -> navController.navigate(LoginRoute)
+                                        "About" -> navController.navigate(DetailsRoute) }
+                                    println("Selected Option: $option")
+                                }}
+                            .padding(vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = when (option) {
+                                "Services" -> Icons.Default.Home
+                                "Profile" -> Icons.Default.Person
+                                "Employee Management" -> Icons.Default.Settings
+                                "Add Employee" -> Icons.Default.Add
+                                "Logout" -> Icons.Default.ExitToApp
+                                "About" -> Icons.Default.Info
+                                else -> Icons.Default.Refresh
+                            },
+                            contentDescription = option,
+                            tint = Color.Gray,
+                            modifier = Modifier.size(24.dp)
+                        )
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Text(text = option, style = MaterialTheme.typography.labelMedium)
+                    }
+                }
+
             }
         }
-    ) { paddingValues ->
+    ) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text("Profile") },
+                    navigationIcon = {
+                        IconButton(onClick = { scope.launch { drawerState.open() } }) {
+                            Icon(Icons.Default.Menu, contentDescription = "Open Menu")
+                        }
+                    }
+                )
+            }
+        )  { paddingValues ->
         LazyColumn(
             modifier = Modifier.padding(paddingValues)
         ) {
@@ -101,11 +181,13 @@ val context = LocalContext.current
                     employee = employee,
                     onDeleteClick = {
 
-                        //employeeToDelete.value = employee
-                        //showDeleteConfirmation.value = true
+
                     },
                     onModifyClick = {
-                        navController.navigate(ModifyEmployeeRoute)
+                        coroutineScope.launch {
+                            DataStoreManager.setEmailToUpdate(context, employee.email);
+                            navController.navigate(ModifyEmployeeRoute)
+                        }
 
                     }
                 )
@@ -125,7 +207,7 @@ val context = LocalContext.current
             )
         }
     }
-}
+}}
 
 @Composable
 fun TopSectionBox(scope: CoroutineScope, drawerState: DrawerState) {
@@ -153,7 +235,7 @@ fun TopSectionBox(scope: CoroutineScope, drawerState: DrawerState) {
                     lineTo(0f, 0f)
                     close()
                 },
-                color = primary// Replace with your theme's primary color
+                color = primary
             )
         }
         IconButton(
@@ -165,7 +247,7 @@ fun TopSectionBox(scope: CoroutineScope, drawerState: DrawerState) {
             Icon(Icons.Default.Menu, contentDescription = "Open Menu", tint = Color.White)
         }
         Text(
-            text = "Gestion des Employers",
+            text = "Employee Management",
             style = MaterialTheme.typography.headlineSmall.copy(color = Color.White),
             modifier = Modifier
                 .align(Alignment.Center)
@@ -176,7 +258,7 @@ fun TopSectionBox(scope: CoroutineScope, drawerState: DrawerState) {
 @Composable
 fun EmployeeItem(
 
-    employee: ProfileDetails, // Accept an Employee object
+    employee: ProfileDetails,
 
     onDeleteClick: () -> Unit,
     onModifyClick: () -> Unit
@@ -194,14 +276,14 @@ fun EmployeeItem(
             modifier = Modifier.weight(1f) // Ensure this takes up available space
         ) {
             Text(employee.name, fontWeight = FontWeight.Bold)
-
-            //Text(employee.poste, style = MaterialTheme.typography.labelMedium)
+            Text(employee.lastName, style = MaterialTheme.typography.labelMedium)
+            Text(employee.email, style = MaterialTheme.typography.labelMedium)
 
         }
 
-        Spacer(modifier = Modifier.width(8.dp)) // Add some space between the text and buttons
+        Spacer(modifier = Modifier.width(8.dp))
 
-        // Row containing the buttons for delete and modify
+
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {

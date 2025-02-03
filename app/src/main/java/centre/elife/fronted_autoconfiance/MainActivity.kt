@@ -17,16 +17,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import centre.elife.fronted_autoconfiance.Views.AcceptedMeetings
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.AddEmployee
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.AdminProfile
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.GestionEmployers
 import centre.elife.fronted_autoconfiance.Views.AdminProfile.UpdateEmployeePage
+import centre.elife.fronted_autoconfiance.Views.ClientListAppointment
 import centre.elife.fronted_autoconfiance.Views.ClientProfile.ClientProfile
+import centre.elife.fronted_autoconfiance.Views.DetailsPage
 import centre.elife.fronted_autoconfiance.Views.EmployeeProfile.EmployeeProfile
 import centre.elife.fronted_autoconfiance.Views.HomePage
 import centre.elife.fronted_autoconfiance.Views.Login
+import centre.elife.fronted_autoconfiance.Views.Meetings.FormulaireRDV
 import centre.elife.fronted_autoconfiance.Views.ResetPassword
 import centre.elife.fronted_autoconfiance.Views.SendEmail
+import centre.elife.fronted_autoconfiance.Views.ServicePage
 import centre.elife.fronted_autoconfiance.Views.SignUp
 import centre.elife.fronted_autoconfiance.ui.theme.Fronted_AutoConfianceTheme
 
@@ -37,14 +42,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             Fronted_AutoConfianceTheme {
                 val navController = rememberNavController()
-                val context = LocalContext.current
+                LocalContext.current
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
 
-                    ) { innerPadding ->
+                ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = ListEmployeeRoute,
+                        startDestination = LoginRoute,
                         modifier = Modifier.padding(innerPadding)
                     ) {
 
@@ -79,9 +84,27 @@ class MainActivity : ComponentActivity() {
                         composable<ModifyEmployeeRoute> {
                             UpdateEmployeePage(navController)
                         }
-
                         composable<ListEmployeeRoute> {
                             GestionEmployers(navController)
+
+                        }
+                        composable<DetailsRoute> {
+                            DetailsPage(navController)
+                        }
+                        composable<AdminRoute> {
+                            AdminProfile(navController)
+                        }
+                        composable<ServicesRoute> {
+                            ServicePage(navController)
+                        }
+                        composable<formulaireRDVRoute> {
+                            FormulaireRDV(navController)
+                        }
+                        composable<ClientListAppointmentRoute> {
+                            ClientListAppointment(navController)
+                        }
+                        composable<AcceptedMeetingsRoute> {
+                            AcceptedMeetings(navController)
 
                         }
                     }
@@ -106,5 +129,6 @@ fun GreetingPreview() {
         val navController = rememberNavController()
         SignUp(navController = navController)
     }
+
 }
 
